@@ -186,9 +186,9 @@
                     <label class="control-label">Filter by City</label>
                     <select id="citySelect" class="control-select">
                         <option value="">All Cities</option>
-                        <option value="chicago">Chicago</option>
-                        <option value="evanston">Evanston</option>
-                        <option value="los_angeles">Los Angeles</option>
+                        <option value="chicago">Chicago Area (60 orgs)</option>
+                        <option value="los_angeles">Los Angeles (4 orgs)</option>
+                        <option value="other">Other Cities (7 orgs)</option>
                     </select>
                 </div>
                 
@@ -208,7 +208,7 @@
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Cities Covered</span>
-                    <span class="stat-value">2</span>
+                    <span class="stat-value">Multiple</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Total Funding</span>
@@ -221,9 +221,9 @@
     </div>
 
     <script>
-        // Initialize map centered between Chicago and LA
+        // Initialize map centered to show all locations
         let map = L.map('map', {
-            center: [37.5, -110], // Centered between Chicago and LA
+            center: [39.0, -95.0], // Centered to show US with Chicago, LA, and DC
             zoom: 4,
             zoomControl: true,
             attributionControl: true
@@ -246,13 +246,13 @@
                 center: [41.8781, -87.6298],
                 bounds: [[41.6444, -87.9073], [42.0230, -87.5240]]
             },
-            evanston: {
-                center: [42.0451, -87.6877],
-                bounds: [[42.0200, -87.7200], [42.0700, -87.6500]]
-            },
             los_angeles: {
                 center: [34.0522, -118.2437],
                 bounds: [[33.7037, -118.6681], [34.3373, -117.6462]]
+            },
+            other: {
+                center: [39.0, -95.0],
+                bounds: [[25.0, -125.0], [49.0, -65.0]]
             }
         };
 
@@ -350,15 +350,7 @@
             }
             
             if (selectedCity) {
-                if (selectedCity === 'chicago') {
-                    filteredOrgs = filteredOrgs.filter(org => org.city_category === 'chicago');
-                } else if (selectedCity === 'los_angeles') {
-                    filteredOrgs = filteredOrgs.filter(org => org.city_category === 'los_angeles');
-                } else {
-                    filteredOrgs = filteredOrgs.filter(org => 
-                        org.city && org.city.toLowerCase().includes(selectedCity.toLowerCase())
-                    );
-                }
+                filteredOrgs = filteredOrgs.filter(org => org.city_category === selectedCity);
             }
             
             if (selectedCategory) {
@@ -373,12 +365,15 @@
             updateStats(filteredOrgs);
             
             // Adjust map view if filtering by city
-            if (selectedCity === 'chicago' && cityBoundaries.chicago) {
-                map.setView(cityBoundaries.chicago.center, 10);
-            } else if (selectedCity === 'evanston' && cityBoundaries.evanston) {
-                map.setView(cityBoundaries.evanston.center, 12);
-            } else if (selectedCity === 'los_angeles' && cityBoundaries.los_angeles) {
-                map.setView(cityBoundaries.los_angeles.center, 10);
+            if (selectedCity && cityBoundaries[selectedCity]) {
+                const boundary = cityBoundaries[selectedCity];
+                if (selectedCity === 'chicago') {
+                    map.setView(boundary.center, 10);
+                } else if (selectedCity === 'los_angeles') {
+                    map.setView(boundary.center, 10);
+                } else if (selectedCity === 'other') {
+                    map.setView(boundary.center, 4);
+                }
             } else if (filteredOrgs.length > 0) {
                 // Fit to show all filtered organizations
                 const validMarkers = currentMarkers.filter(marker => marker.getLatLng);

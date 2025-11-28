@@ -46,4 +46,3 @@ Thumbs.db
 # Data processing temp files
 examine_excel.py
 process_excel_data.py
-.vercel

@@ -96,8 +96,8 @@
     "name": "Alzheimer's Association",
     "address": "",
     "address_line2": "",
-    "city": "",
-    "state": "",
+    "city": "Chicago",
+    "state": "IL",
     "postal_code": "",
     "website": "",
     "email": "",
@@ -133,7 +133,9 @@
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "chicago",
+    "lat": 41.8781,
+    "lng": -87.6298
   },
   {
     "id": "4",
@@ -177,7 +179,9 @@
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "other",
+    "lat": 40.5200224,
+    "lng": -105.0461457
   },
   {
     "id": "5",
@@ -506,8 +510,8 @@
     "name": "Chicago Funders Together to End Homelesssness",
     "address": "",
     "address_line2": "",
-    "city": "",
-    "state": "",
+    "city": "Chicago",
+    "state": "IL",
     "postal_code": "",
     "website": "",
     "email": "",
@@ -543,15 +547,17 @@
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "chicago",
+    "lat": 41.8781,
+    "lng": -87.6298
   },
   {
     "id": "13",
     "name": "Chicago Funders Together to End Homelesssness",
     "address": "",
     "address_line2": "",
-    "city": "",
-    "state": "",
+    "city": "Chicago",
+    "state": "IL",
     "postal_code": "",
     "website": "",
     "email": "",
@@ -587,7 +593,9 @@
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "chicago",
+    "lat": 41.8781,
+    "lng": -87.6298
   },
   {
     "id": "14",
@@ -870,8 +878,8 @@
     "name": "Crossroads Fund",
     "address": "",
     "address_line2": "",
-    "city": "",
-    "state": "",
+    "city": "Chicago",
+    "state": "IL",
     "postal_code": "",
     "website": "",
     "email": "",
@@ -907,7 +915,9 @@
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "chicago",
+    "lat": 41.8781,
+    "lng": -87.6298
   },
   {
     "id": "21",
@@ -1234,8 +1244,8 @@
     "name": "Greater Chicago Food Depository / City Colleges of Chicago  Partnership",
     "address": "",
     "address_line2": "",
-    "city": "",
-    "state": "",
+    "city": "Chicago",
+    "state": "IL",
     "postal_code": "",
     "website": "",
     "email": "",
@@ -1271,15 +1281,17 @@
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "chicago",
+    "lat": 41.8781,
+    "lng": -87.6298
   },
   {
     "id": "29",
     "name": "Forefront",
     "address": "",
     "address_line2": "",
-    "city": "",
-    "state": "",
+    "city": "Chicago",
+    "state": "IL",
     "postal_code": "",
     "website": "",
     "email": "",
@@ -1315,7 +1327,9 @@
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "chicago",
+    "lat": 41.8781,
+    "lng": -87.6298
   },
   {
     "id": "30",
@@ -1368,8 +1382,8 @@
     "name": "Imagine Englewood If",
     "address": "",
     "address_line2": "",
-    "city": "",
-    "state": "",
+    "city": "Chicago",
+    "state": "IL",
     "postal_code": "",
     "website": "",
     "email": "",
@@ -1405,7 +1419,9 @@
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "chicago",
+    "lat": 41.7794,
+    "lng": -87.6431
   },
   {
     "id": "32",
@@ -1550,8 +1566,8 @@
     "name": "Inclusive Economy Lab",
     "address": "",
     "address_line2": "",
-    "city": "",
-    "state": "",
+    "city": "Los Angeles",
+    "state": "CA",
     "postal_code": "",
     "website": "",
     "email": "",
@@ -1587,7 +1603,9 @@
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "los_angeles",
+    "lat": 34.0522,
+    "lng": -118.2437
   },
   {
     "id": "36",
@@ -2418,8 +2436,8 @@
     "name": "One Acre Fund",
     "address": "",
     "address_line2": "",
-    "city": "",
-    "state": "",
+    "city": "Chicago",
+    "state": "IL",
     "postal_code": "",
     "website": "",
     "email": "",
@@ -2455,7 +2473,9 @@
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "chicago",
+    "lat": 41.8781,
+    "lng": -87.6298
   },
   {
     "id": "55",
@@ -2506,8 +2526,8 @@
     "name": "Reclaiming Chicago",
     "address": "",
     "address_line2": "",
-    "city": "",
-    "state": "",
+    "city": "Chicago",
+    "state": "IL",
     "postal_code": "",
     "website": "",
     "email": "",
@@ -2543,7 +2563,9 @@
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "chicago",
+    "lat": 41.8781,
+    "lng": -87.6298
   },
   {
     "id": "57",
@@ -3008,8 +3030,8 @@
     "name": "National Alliance to End Homelessness",
     "address": "",
     "address_line2": "",
-    "city": "",
-    "state": "",
+    "city": "Washington",
+    "state": "DC",
     "postal_code": "",
     "website": "",
     "email": "",
@@ -3045,15 +3067,17 @@
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "other",
+    "lat": 38.9072,
+    "lng": -77.0369
   },
   {
     "id": "68",
     "name": "World Centeral Kitchen (LA Fire Response)",
     "address": "",
     "address_line2": "",
-    "city": "",
-    "state": "",
+    "city": "Los Angeles",
+    "state": "CA",
     "postal_code": "",
     "website": "",
     "email": "",
@@ -3089,15 +3113,17 @@
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "los_angeles",
+    "lat": 34.0522,
+    "lng": -118.2437
   },
   {
     "id": "69",
     "name": "World Centeral Kitchen (LA Fire Response)",
     "address": "",
     "address_line2": "",
-    "city": "",
-    "state": "",
+    "city": "Los Angeles",
+    "state": "CA",
     "postal_code": "",
     "website": "",
     "email": "",
@@ -3133,15 +3159,17 @@
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "los_angeles",
+    "lat": 34.0522,
+    "lng": -118.2437
   },
   {
     "id": "70",
     "name": "American Red Cross (LA Fire Response)",
     "address": "",
     "address_line2": "",
-    "city": "",
-    "state": "",
+    "city": "Los Angeles",
+    "state": "CA",
     "postal_code": "",
     "website": "",
     "email": "",
@@ -3177,15 +3205,17 @@
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "los_angeles",
+    "lat": 34.0522,
+    "lng": -118.2437
   },
   {
     "id": "71",
     "name": "Window to the World",
     "address": "",
     "address_line2": "",
-    "city": "",
-    "state": "",
+    "city": "Chicago",
+    "state": "IL",
     "postal_code": "",
     "website": "",
     "email": "",
@@ -3221,6 +3251,8 @@
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "chicago",
+    "lat": 41.8781,
+    "lng": -87.6298
   }
 ]
