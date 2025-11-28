@@ -256,22 +256,9 @@
             }
         };
 
-        // Add city boundary rectangles
+        // Add city boundary rectangles (disabled to remove blue boxes)
         function addCityBoundaries() {
-            Object.keys(cityBoundaries).forEach(city => {
-                const bounds = cityBoundaries[city].bounds;
-                L.rectangle(bounds, {
-                    color: '#3b82f6',
-                    weight: 2,
-                    opacity: 0.6,
-                    fillOpacity: 0.1,
-                    dashArray: '5,5'
-                }).addTo(map).bindTooltip(city.replace('_', ' ').toUpperCase(), {
-                    permanent: false,
-                    direction: 'center',
-                    className: 'custom-tooltip'
-                });
-            });
+            // Removed city boundary rectangles to clean up map display
         }
 
         // Add organization marker
