@@ -410,6 +410,16 @@
 
         // Load organization data (placeholder - will be replaced with Excel data)
         function loadOrganizationData(data) {
+            console.log('Loading organization data:', data.length, 'organizations');
+            
+            // Debug: Check LA organizations
+            const laOrgs = data.filter(org => org.city_category === 'los_angeles');
+            console.log('LA organizations found:', laOrgs.length, laOrgs.map(org => org.name));
+            
+            // Debug: Check Evanston categorization
+            const evanstonOrgs = data.filter(org => org.city && org.city.toLowerCase() === 'evanston');
+            console.log('Evanston organizations:', evanstonOrgs.map(org => `${org.name} (category: ${org.city_category})`));
+            
             organizationData = data;
             populateDropdowns();
             filterOrganizations();
