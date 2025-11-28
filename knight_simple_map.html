@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
+    <!-- Knight Impact Partners Data -->
+    <script src="knight_data.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -457,18 +460,15 @@
         // Initialize
         addCityBoundaries();
         
-        // Load real Knight Impact Partners data with cache busting
-        fetch('knight_organizations_processed.json?v=' + Date.now())
-            .then(response => response.json())
-            .then(data => {
-                console.log('Loaded', data.length, 'organizations');
-                loadOrganizationData(data);
-            })
-            .catch(error => {
-                console.error('Error loading data:', error);
-                // Fallback to empty array if file not found
-                loadOrganizationData([]);
-            });
+        // Load real Knight Impact Partners data from embedded JavaScript
+        console.log('Loading embedded data...');
+        if (typeof KNIGHT_ORGANIZATIONS_DATA !== 'undefined') {
+            console.log('Found embedded data with', KNIGHT_ORGANIZATIONS_DATA.length, 'organizations');
+            loadOrganizationData(KNIGHT_ORGANIZATIONS_DATA);
+        } else {
+            console.error('KNIGHT_ORGANIZATIONS_DATA not found!');
+            loadOrganizationData([]);
+        }
     </script>
 </body>
 </html>
