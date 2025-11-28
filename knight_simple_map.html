@@ -423,8 +423,8 @@
         // Initialize
         addCityBoundaries();
         
-        // Load real Knight Impact Partners data
-        fetch('knight_organizations_processed.json')
+        // Load real Knight Impact Partners data with cache busting
+        fetch('knight_organizations_processed.json?v=' + Date.now())
             .then(response => response.json())
             .then(data => {
                 console.log('Loaded', data.length, 'organizations');
