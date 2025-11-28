@@ -292,7 +292,7 @@
                 <div style="font-family: 'Inter', sans-serif; min-width: 320px; max-width: 400px;">
                     <h3 style="margin: 0 0 12px 0; color: #ffffff; font-size: 16px; font-weight: 600;">${org.name}</h3>
                     <div style="font-size: 13px; line-height: 1.5; color: #d1d5db;">
-                        <div style="margin-bottom: 6px;"><strong>📍 Location:</strong> ${org.city}, ${org.state}</div>
+                        <div style="margin-bottom: 6px;"><strong>📍 Location:</strong> ${org.location_note ? org.location_note + ', ' : ''}${org.city}, ${org.state}</div>
                         <div style="margin-bottom: 6px;"><strong>🏷️ Category:</strong> ${org.category || 'Not specified'}</div>
                         ${org.grant_amount_awarded ? `<div style="margin-bottom: 6px;"><strong>💰 Grant Awarded:</strong> $${Number(org.grant_amount_awarded).toLocaleString()}</div>` : ''}
                         ${org.amount_requested ? `<div style="margin-bottom: 6px;"><strong>💸 Amount Requested:</strong> $${Number(org.amount_requested).toLocaleString()}</div>` : ''}

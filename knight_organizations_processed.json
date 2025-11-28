@@ -1605,7 +1605,8 @@
     "public_funding_sources": "",
     "city_category": "los_angeles",
     "lat": 34.0522,
-    "lng": -118.2437
+    "lng": -118.2437,
+    "location_note": "Downtown Los Angeles"
   },
   {
     "id": "36",
@@ -3114,8 +3115,9 @@
     "private_funding_sources": "",
     "public_funding_sources": "",
     "city_category": "los_angeles",
-    "lat": 34.0522,
-    "lng": -118.2437
+    "lat": 34.0928,
+    "lng": -118.3287,
+    "location_note": "Hollywood"
   },
   {
     "id": "69",
@@ -3160,8 +3162,9 @@
     "private_funding_sources": "",
     "public_funding_sources": "",
     "city_category": "los_angeles",
-    "lat": 34.0522,
-    "lng": -118.2437
+    "lat": 34.0195,
+    "lng": -118.4912,
+    "location_note": "Santa Monica"
   },
   {
     "id": "70",
@@ -3206,8 +3209,9 @@
     "private_funding_sources": "",
     "public_funding_sources": "",
     "city_category": "los_angeles",
-    "lat": 34.0522,
-    "lng": -118.2437
+    "lat": 34.0736,
+    "lng": -118.4004,
+    "location_note": "Beverly Hills"
   },
   {
     "id": "71",
