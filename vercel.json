@@ -1,20 +1,8 @@
 {
-  "version": 2,
-  "name": "knight-impact-partners-map",
-  "builds": [
+  "rewrites": [
     {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/",
-      "dest": "/index.html"
-    },
-    {
-      "src": "/map",
-      "dest": "/knight_simple_map.html"
+      "source": "/map",
+      "destination": "/knight_simple_map.html"
     }
   ],
   "headers": [
