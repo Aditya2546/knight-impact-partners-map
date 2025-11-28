@@ -1,0 +1,78 @@
+[
+  {
+    "name": "Pooled Fund",
+    "address": "",
+    "city": "",
+    "state": "",
+    "funding": 0,
+    "category": "Systems Building",
+    "id": "4",
+    "city_category": "other"
+  },
+  {
+    "name": "Pooled Fund",
+    "address": "",
+    "city": "",
+    "state": "",
+    "funding": 0,
+    "category": "",
+    "id": "20",
+    "city_category": "other"
+  },
+  {
+    "name": "Pooled Fund",
+    "address": "",
+    "city": "",
+    "state": "",
+    "funding": 0,
+    "category": "Systems Building",
+    "id": "29",
+    "city_category": "other"
+  },
+  {
+    "name": "Matching Grant",
+    "address": "jose@lacasanorte.org",
+    "city": "Chicago",
+    "state": "IL",
+    "funding": 0,
+    "category": "Human Services",
+    "lat": 41.8755616,
+    "lng": -87.6244212,
+    "id": "39",
+    "city_category": "chicago"
+  },
+  {
+    "name": "Pooled Fund",
+    "address": "",
+    "city": "",
+    "state": "",
+    "funding": 0,
+    "category": "Health and Human Services",
+    "id": "55",
+    "city_category": "other"
+  },
+  {
+    "name": "Pooled Fund",
+    "address": "jrooney@uchicago.edu",
+    "city": "Chicago",
+    "state": "IL",
+    "funding": 0,
+    "category": "Systems Building",
+    "lat": 41.8755616,
+    "lng": -87.6244212,
+    "id": "64",
+    "city_category": "chicago"
+  },
+  {
+    "name": "Pooled Fund",
+    "address": "jarquetta@xchangechicago.org",
+    "city": "Chicago",
+    "state": "Illinois",
+    "funding": 0,
+    "category": "Community Development",
+    "lat": 41.8755616,
+    "lng": -87.6244212,
+    "id": "65",
+    "city_category": "chicago"
+  }
+]

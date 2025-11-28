@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knight Impact Partners - Interactive Map</title>
+    
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a1a;
+            color: #ffffff;
+            overflow: hidden;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            height: 100vh;
+            background: #1a1a1a;
+        }
+        
+        .sidebar {
+            background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        
+        .controls {
+            margin-bottom: 30px;
+        }
+        
+        .control-group {
+            margin-bottom: 20px;
+        }
+        
+        .control-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #d1d5db;
+        }
+        
+        .control-select {
+            width: 100%;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+        }
+        
+        .control-select option {
+            background: #2a2a2a;
+            color: #ffffff;
+        }
+        
+        .stats {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .stats-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .stat-label {
+            color: #9ca3af;
+        }
+        
+        .stat-value {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+        
+        .leaflet-popup-content-wrapper {
+            background: rgba(26, 26, 26, 0.95);
+            color: #ffffff;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .leaflet-popup-content {
+            margin: 16px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .leaflet-popup-tip {
+            background: rgba(26, 26, 26, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .custom-tooltip {
+            background: rgba(26, 26, 26, 0.9) !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border-radius: 8px !important;
+            font-family: 'Inter', sans-serif !important;
+            font-size: 12px !important;
+            padding: 8px 12px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="24" height="24" fill="white" viewBox="0 0 24 24">
+                        <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
+                    </svg>
+                </div>
+                <span class="logo-text">Knight Impact Partners</span>
+            </div>
+            
+            <div class="controls">
+                <div class="control-group">
+                    <label class="control-label">Select Organization</label>
+                    <select id="organizationSelect" class="control-select">
+                        <option value="">All Organizations</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Filter by City</label>
+                    <select id="citySelect" class="control-select">
+                        <option value="">All Cities</option>
+                        <option value="chicago">Chicago</option>
+                        <option value="evanston">Evanston</option>
+                        <option value="los_angeles">Los Angeles</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Filter by Category</label>
+                    <select id="categorySelect" class="control-select">
+                        <option value="">All Categories</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stats-title">Impact Overview</div>
+                <div class="stat-item">
+                    <span class="stat-label">Total Organizations</span>
+                    <span class="stat-value" id="totalOrgs">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Cities Covered</span>
+                    <span class="stat-value">2</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Total Funding</span>
+                    <span class="stat-value" id="totalFunding">$0</span>
+                </div>
+            </div>
+        </div>
+        
+        <div id="map"></div>
+    </div>
+
+    <script>
+        // Initialize map centered between Chicago and LA
+        let map = L.map('map', {
+            center: [37.5, -110], // Centered between Chicago and LA
+            zoom: 4,
+            zoomControl: true,
+            attributionControl: true
+        });
+
+        // Add tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Organization data - will be populated from Excel
+        let organizationData = [];
+        
+        // Current markers on map
+        let currentMarkers = [];
+        
+        // City boundaries (simplified)
+        const cityBoundaries = {
+            chicago: {
+                center: [41.8781, -87.6298],
+                bounds: [[41.6444, -87.9073], [42.0230, -87.5240]]
+            },
+            evanston: {
+                center: [42.0451, -87.6877],
+                bounds: [[42.0200, -87.7200], [42.0700, -87.6500]]
+            },
+            los_angeles: {
+                center: [34.0522, -118.2437],
+                bounds: [[33.7037, -118.6681], [34.3373, -117.6462]]
+            }
+        };
+
+        // Add city boundary rectangles
+        function addCityBoundaries() {
+            Object.keys(cityBoundaries).forEach(city => {
+                const bounds = cityBoundaries[city].bounds;
+                L.rectangle(bounds, {
+                    color: '#3b82f6',
+                    weight: 2,
+                    opacity: 0.6,
+                    fillOpacity: 0.1,
+                    dashArray: '5,5'
+                }).addTo(map).bindTooltip(city.replace('_', ' ').toUpperCase(), {
+                    permanent: false,
+                    direction: 'center',
+                    className: 'custom-tooltip'
+                });
+            });
+        }
+
+        // Add organization marker
+        function addOrganizationMarker(org) {
+            if (!org.lat || !org.lng) return;
+            
+            // Color coding by category
+            const categoryColors = {
+                'Human Services': '#3b82f6',
+                'Community Development': '#10b981',
+                'Education': '#f59e0b',
+                'Health': '#ef4444',
+                'Health and Human Services': '#8b5cf6',
+                'Systems Building': '#06b6d4',
+                'Community Building': '#84cc16'
+            };
+            
+            const markerColor = categoryColors[org.category] || '#6b7280';
+            
+            const marker = L.circleMarker([org.lat, org.lng], {
+                radius: 10,
+                fillColor: markerColor,
+                color: '#ffffff',
+                weight: 2,
+                opacity: 1,
+                fillOpacity: 0.8
+            }).addTo(map);
+            
+            // Create comprehensive popup content
+            const popupContent = `
+                <div style="font-family: 'Inter', sans-serif; min-width: 320px; max-width: 400px;">
+                    <h3 style="margin: 0 0 12px 0; color: #ffffff; font-size: 16px; font-weight: 600;">${org.name}</h3>
+                    <div style="font-size: 13px; line-height: 1.5; color: #d1d5db;">
+                        <div style="margin-bottom: 6px;"><strong>📍 Location:</strong> ${org.city}, ${org.state}</div>
+                        <div style="margin-bottom: 6px;"><strong>🏷️ Category:</strong> ${org.category || 'Not specified'}</div>
+                        ${org.grant_amount_awarded ? `<div style="margin-bottom: 6px;"><strong>💰 Grant Awarded:</strong> $${Number(org.grant_amount_awarded).toLocaleString()}</div>` : ''}
+                        ${org.amount_requested ? `<div style="margin-bottom: 6px;"><strong>💸 Amount Requested:</strong> $${Number(org.amount_requested).toLocaleString()}</div>` : ''}
+                        ${org.year_founded ? `<div style="margin-bottom: 6px;"><strong>📅 Founded:</strong> ${org.year_founded}</div>` : ''}
+                        ${org.full_time_staff ? `<div style="margin-bottom: 6px;"><strong>👥 Staff:</strong> ${org.full_time_staff} full-time${org.part_time_staff ? `, ${org.part_time_staff} part-time` : ''}</div>` : ''}
+                        ${org.website ? `<div style="margin-bottom: 6px;"><strong>🌐 Website:</strong> <a href="http://${org.website}" target="_blank" style="color: #60a5fa;">${org.website}</a></div>` : ''}
+                        ${org.primary_neighborhood ? `<div style="margin-bottom: 6px;"><strong>🏘️ Primary Area:</strong> ${org.primary_neighborhood}</div>` : ''}
+                        ${org.contact_email ? `<div style="margin-bottom: 6px;"><strong>📧 Contact:</strong> ${org.contact_first_name} ${org.contact_last_name} (${org.contact_title})</div>` : ''}
+                        ${org.mission ? `<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; color: #9ca3af; max-height: 100px; overflow-y: auto;"><strong>Mission:</strong> ${org.mission.substring(0, 300)}${org.mission.length > 300 ? '...' : ''}</div>` : ''}
+                    </div>
+                </div>
+            `;
+            
+            marker.bindPopup(popupContent);
+            marker.bindTooltip(`${org.name}<br/>${org.category}`, {
+                permanent: false,
+                direction: 'top',
+                className: 'custom-tooltip'
+            });
+            
+            currentMarkers.push(marker);
+        }
+
+        // Clear all markers
+        function clearMarkers() {
+            currentMarkers.forEach(marker => map.removeLayer(marker));
+            currentMarkers = [];
+        }
+
+        // Filter and display organizations
+        function filterOrganizations() {
+            const selectedOrg = document.getElementById('organizationSelect').value;
+            const selectedCity = document.getElementById('citySelect').value;
+            const selectedCategory = document.getElementById('categorySelect').value;
+            
+            clearMarkers();
+            
+            let filteredOrgs = organizationData;
+            
+            if (selectedOrg) {
+                filteredOrgs = filteredOrgs.filter(org => org.id === selectedOrg);
+            }
+            
+            if (selectedCity) {
+                if (selectedCity === 'chicago') {
+                    filteredOrgs = filteredOrgs.filter(org => org.city_category === 'chicago');
+                } else if (selectedCity === 'los_angeles') {
+                    filteredOrgs = filteredOrgs.filter(org => org.city_category === 'los_angeles');
+                } else {
+                    filteredOrgs = filteredOrgs.filter(org => 
+                        org.city && org.city.toLowerCase().includes(selectedCity.toLowerCase())
+                    );
+                }
+            }
+            
+            if (selectedCategory) {
+                filteredOrgs = filteredOrgs.filter(org => 
+                    org.category && org.category.toLowerCase() === selectedCategory.toLowerCase()
+                );
+            }
+            
+            filteredOrgs.forEach(org => addOrganizationMarker(org));
+            
+            // Update stats
+            updateStats(filteredOrgs);
+            
+            // Adjust map view if filtering by city
+            if (selectedCity === 'chicago' && cityBoundaries.chicago) {
+                map.setView(cityBoundaries.chicago.center, 10);
+            } else if (selectedCity === 'evanston' && cityBoundaries.evanston) {
+                map.setView(cityBoundaries.evanston.center, 12);
+            } else if (selectedCity === 'los_angeles' && cityBoundaries.los_angeles) {
+                map.setView(cityBoundaries.los_angeles.center, 10);
+            } else if (filteredOrgs.length > 0) {
+                // Fit to show all filtered organizations
+                const validMarkers = currentMarkers.filter(marker => marker.getLatLng);
+                if (validMarkers.length > 0) {
+                    const group = new L.featureGroup(validMarkers);
+                    map.fitBounds(group.getBounds().pad(0.1));
+                }
+            }
+        }
+
+        // Update statistics
+        function updateStats(orgs) {
+            document.getElementById('totalOrgs').textContent = orgs.length;
+            
+            const totalAwarded = orgs.reduce((sum, org) => sum + (Number(org.grant_amount_awarded) || 0), 0);
+            document.getElementById('totalFunding').textContent = `$${totalAwarded.toLocaleString()}`;
+        }
+
+        // Populate dropdowns
+        function populateDropdowns() {
+            const orgSelect = document.getElementById('organizationSelect');
+            const categorySelect = document.getElementById('categorySelect');
+            
+            // Clear existing options (except "All")
+            orgSelect.innerHTML = '<option value="">All Organizations</option>';
+            categorySelect.innerHTML = '<option value="">All Categories</option>';
+            
+            // Get unique categories
+            const categories = [...new Set(organizationData.map(org => org.category).filter(Boolean))];
+            
+            // Populate organization dropdown
+            organizationData.forEach(org => {
+                const option = document.createElement('option');
+                option.value = org.id;
+                option.textContent = org.name;
+                orgSelect.appendChild(option);
+            });
+            
+            // Populate category dropdown
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.toLowerCase();
+                option.textContent = category;
+                categorySelect.appendChild(option);
+            });
+        }
+
+        // Load organization data (placeholder - will be replaced with Excel data)
+        function loadOrganizationData(data) {
+            organizationData = data;
+            populateDropdowns();
+            filterOrganizations();
+        }
+
+        // Event listeners
+        document.getElementById('organizationSelect').addEventListener('change', filterOrganizations);
+        document.getElementById('citySelect').addEventListener('change', filterOrganizations);
+        document.getElementById('categorySelect').addEventListener('change', filterOrganizations);
+
+        // Initialize
+        addCityBoundaries();
+        
+        // Load real Knight Impact Partners data
+        fetch('knight_organizations_processed.json')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Loaded', data.length, 'organizations');
+                loadOrganizationData(data);
+            })
+            .catch(error => {
+                console.error('Error loading data:', error);
+                // Fallback to empty array if file not found
+                loadOrganizationData([]);
+            });
+    </script>
+</body>
+</html>
