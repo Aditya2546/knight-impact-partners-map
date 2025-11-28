@@ -1,4 +1,4 @@
-const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
+[
   {
     "id": "1",
     "name": "Access Living",
@@ -2900,4 +2900,4 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "lat": 41.8781,
     "lng": -87.6298
   }
-];
+]

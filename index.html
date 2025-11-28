@@ -189,9 +189,9 @@
                     <label class="control-label">Filter by City</label>
                     <select id="citySelect" class="control-select">
                         <option value="">All Cities</option>
-                        <option value="chicago">Chicago Area (60 orgs)</option>
-                        <option value="los_angeles">Los Angeles (4 orgs)</option>
-                        <option value="other">Other Cities (7 orgs)</option>
+                        <option value="chicago">Chicago Area</option>
+                        <option value="los_angeles">Los Angeles</option>
+                        <option value="other">Other Cities</option>
                     </select>
                 </div>
                 
@@ -294,21 +294,42 @@
                 fillOpacity: 0.8
             }).addTo(map);
             
-            // Create comprehensive popup content
-            const popupContent = `
-                <div style="font-family: 'Inter', sans-serif; min-width: 320px; max-width: 400px;">
+            // Create clean popup content (removed: amount requested, mission, contact name)
+            let popupContent = `
+                <div style="font-family: 'Inter', sans-serif; min-width: 280px; max-width: 350px;">
                     <h3 style="margin: 0 0 12px 0; color: #ffffff; font-size: 16px; font-weight: 600;">${org.name}</h3>
                     <div style="font-size: 13px; line-height: 1.5; color: #d1d5db;">
-                        <div style="margin-bottom: 6px;"><strong>📍 Location:</strong> ${org.location_note ? org.location_note + ', ' : ''}${org.city}, ${org.state}</div>
+                        <div style="margin-bottom: 6px;"><strong>📍 Location:</strong> ${org.location_note ? org.location_note + ', ' : ''}${org.city}${org.state ? ', ' + org.state : ''}</div>
                         <div style="margin-bottom: 6px;"><strong>🏷️ Category:</strong> ${org.category || 'Not specified'}</div>
-                        ${org.grant_amount_awarded ? `<div style="margin-bottom: 6px;"><strong>💰 Grant Awarded:</strong> $${Number(org.grant_amount_awarded).toLocaleString()}</div>` : ''}
-                        ${org.amount_requested ? `<div style="margin-bottom: 6px;"><strong>💸 Amount Requested:</strong> $${Number(org.amount_requested).toLocaleString()}</div>` : ''}
+            `;
+            
+            // Handle multiple grants
+            if (org.has_multiple_grants && org.grants && org.grants.length > 1) {
+                popupContent += `
+                        <div style="margin-bottom: 6px;"><strong>💰 Total Grants:</strong> $${Number(org.grant_amount_awarded).toLocaleString()} (${org.grant_count} grants)</div>
+                        <div style="margin-top: 10px; padding: 8px; background: rgba(59, 130, 246, 0.1); border-radius: 6px;">
+                `;
+                org.grants.forEach(grant => {
+                    popupContent += `
+                            <div style="margin-bottom: 4px; font-size: 12px;">
+                                <strong>Grant ${grant.number}:</strong> $${Number(grant.amount_awarded).toLocaleString()}
+                                ${grant.category ? ` - ${grant.category}` : ''}
+                            </div>
+                    `;
+                });
+                popupContent += `</div>`;
+            } else {
+                // Single grant
+                if (org.grant_amount_awarded) {
+                    popupContent += `<div style="margin-bottom: 6px;"><strong>💰 Grant Awarded:</strong> $${Number(org.grant_amount_awarded).toLocaleString()}</div>`;
+                }
+            }
+            
+            popupContent += `
                         ${org.year_founded ? `<div style="margin-bottom: 6px;"><strong>📅 Founded:</strong> ${org.year_founded}</div>` : ''}
                         ${org.full_time_staff ? `<div style="margin-bottom: 6px;"><strong>👥 Staff:</strong> ${org.full_time_staff} full-time${org.part_time_staff ? `, ${org.part_time_staff} part-time` : ''}</div>` : ''}
                         ${org.website ? `<div style="margin-bottom: 6px;"><strong>🌐 Website:</strong> <a href="http://${org.website}" target="_blank" style="color: #60a5fa;">${org.website}</a></div>` : ''}
                         ${org.primary_neighborhood ? `<div style="margin-bottom: 6px;"><strong>🏘️ Primary Area:</strong> ${org.primary_neighborhood}</div>` : ''}
-                        ${org.contact_email ? `<div style="margin-bottom: 6px;"><strong>📧 Contact:</strong> ${org.contact_first_name} ${org.contact_last_name} (${org.contact_title})</div>` : ''}
-                        ${org.mission ? `<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; color: #9ca3af; max-height: 100px; overflow-y: auto;"><strong>Mission:</strong> ${org.mission.substring(0, 300)}${org.mission.length > 300 ? '...' : ''}</div>` : ''}
                     </div>
                 </div>
             `;
@@ -460,13 +481,16 @@
         // Initialize
         addCityBoundaries();
         
-        // Load real Knight Impact Partners data from embedded JavaScript
+        // Load combined Knight Impact Partners data from embedded JavaScript
         console.log('Loading embedded data...');
-        if (typeof KNIGHT_ORGANIZATIONS_DATA !== 'undefined') {
+        if (typeof KNIGHT_ORGANIZATIONS_DATA_COMBINED !== 'undefined') {
+            console.log('Found combined data with', KNIGHT_ORGANIZATIONS_DATA_COMBINED.length, 'organizations');
+            loadOrganizationData(KNIGHT_ORGANIZATIONS_DATA_COMBINED);
+        } else if (typeof KNIGHT_ORGANIZATIONS_DATA !== 'undefined') {
             console.log('Found embedded data with', KNIGHT_ORGANIZATIONS_DATA.length, 'organizations');
             loadOrganizationData(KNIGHT_ORGANIZATIONS_DATA);
         } else {
-            console.error('KNIGHT_ORGANIZATIONS_DATA not found!');
+            console.error('Organization data not found!');
             loadOrganizationData([]);
         }
     </script>
