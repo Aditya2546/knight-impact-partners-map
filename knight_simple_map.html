@@ -256,14 +256,18 @@
             }
         };
 
-        // Add city boundary rectangles (disabled to remove blue boxes)
+        // Add city boundary rectangles (completely disabled)
         function addCityBoundaries() {
-            // Removed city boundary rectangles to clean up map display
+            // Completely removed - no city boundaries shown
         }
 
         // Add organization marker
         function addOrganizationMarker(org) {
-            if (!org.lat || !org.lng) return;
+            if (!org.lat || !org.lng) {
+                console.log('Skipping org without coordinates:', org.name, 'lat:', org.lat, 'lng:', org.lng);
+                return;
+            }
+            console.log('Creating marker for:', org.name, 'at coordinates:', org.lat, org.lng);
             
             // Color coding by category
             const categoryColors = {
@@ -328,25 +332,44 @@
             const selectedCity = document.getElementById('citySelect').value;
             const selectedCategory = document.getElementById('categorySelect').value;
             
+            console.log('Filtering with:', {selectedOrg, selectedCity, selectedCategory});
+            console.log('Total organizations available:', organizationData.length);
+            
             clearMarkers();
             
             let filteredOrgs = organizationData;
             
             if (selectedOrg) {
                 filteredOrgs = filteredOrgs.filter(org => org.id === selectedOrg);
+                console.log('After org filter:', filteredOrgs.length);
             }
             
             if (selectedCity) {
-                filteredOrgs = filteredOrgs.filter(org => org.city_category === selectedCity);
+                console.log('Filtering by city:', selectedCity);
+                const beforeCount = filteredOrgs.length;
+                filteredOrgs = filteredOrgs.filter(org => {
+                    const matches = org.city_category === selectedCity;
+                    if (selectedCity === 'los_angeles' && matches) {
+                        console.log('LA org found:', org.name, org.city_category, org.lat, org.lng);
+                    }
+                    return matches;
+                });
+                console.log(`City filter: ${beforeCount} → ${filteredOrgs.length} organizations`);
             }
             
             if (selectedCategory) {
                 filteredOrgs = filteredOrgs.filter(org => 
                     org.category && org.category.toLowerCase() === selectedCategory.toLowerCase()
                 );
+                console.log('After category filter:', filteredOrgs.length);
             }
             
-            filteredOrgs.forEach(org => addOrganizationMarker(org));
+            console.log('Final filtered organizations:', filteredOrgs.length);
+            
+            filteredOrgs.forEach(org => {
+                console.log('Adding marker for:', org.name, 'at', org.lat, org.lng);
+                addOrganizationMarker(org);
+            });
             
             // Update stats
             updateStats(filteredOrgs);
@@ -357,6 +380,7 @@
                 if (selectedCity === 'chicago') {
                     map.setView(boundary.center, 10);
                 } else if (selectedCity === 'los_angeles') {
+                    console.log('Zooming to LA:', boundary.center);
                     map.setView(boundary.center, 10);
                 } else if (selectedCity === 'other') {
                     map.setView(boundary.center, 4);
