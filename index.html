@@ -17,6 +17,9 @@
     <!-- Knight Impact Partners Data -->
     <script src="knight_data.js"></script>
     
+    <!-- Chicago Neighborhood Polygons -->
+    <script src="chicago_neighborhoods.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -162,6 +165,30 @@
             font-family: 'Inter', sans-serif !important;
             font-size: 12px !important;
             padding: 8px 12px !important;
+        }
+        
+        .neighborhood-tooltip {
+            background: rgba(59, 130, 246, 0.95) !important;
+            color: #ffffff !important;
+            border: none !important;
+            border-radius: 6px !important;
+            font-family: 'Inter', sans-serif !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            padding: 6px 12px !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+        }
+        
+        .neighborhood-tooltip::before {
+            border-top-color: rgba(59, 130, 246, 0.95) !important;
+        }
+        
+        .service-area-polygon {
+            transition: fill-opacity 0.2s ease;
+        }
+        
+        .service-area-polygon:hover {
+            fill-opacity: 0.35 !important;
         }
     </style>
 </head>
@@ -330,6 +357,7 @@
                         ${org.full_time_staff ? `<div style="margin-bottom: 6px;"><strong>👥 Staff:</strong> ${org.full_time_staff} full-time${org.part_time_staff ? `, ${org.part_time_staff} part-time` : ''}</div>` : ''}
                         ${org.website ? `<div style="margin-bottom: 6px;"><strong>🌐 Website:</strong> <a href="http://${org.website}" target="_blank" style="color: #60a5fa;">${org.website}</a></div>` : ''}
                         ${org.primary_neighborhood ? `<div style="margin-bottom: 6px;"><strong>🏘️ Primary Area:</strong> ${org.primary_neighborhood}</div>` : ''}
+                        ${org.service_areas_type ? `<div style="margin-bottom: 6px;"><strong>🗺️ Service Areas:</strong> ${org.service_areas_type} (${org.service_areas_count || 0} neighborhoods)</div>` : ''}
                     </div>
                 </div>
             `;
@@ -341,12 +369,92 @@
                 className: 'custom-tooltip'
             });
             
+            // When marker is clicked, show service areas
+            marker.on('click', function() {
+                drawServiceAreas(org);
+            });
+            
+            // When popup closes, clear service areas
+            marker.on('popupclose', function() {
+                clearServiceAreas();
+            });
+            
             currentMarkers.push(marker);
+        }
+
+        // Store service area polygons
+        let serviceAreaPolygons = [];
+
+        // Clear service area polygons
+        function clearServiceAreas() {
+            serviceAreaPolygons.forEach(polygon => map.removeLayer(polygon));
+            serviceAreaPolygons = [];
+        }
+
+        // Draw service area polygons for an organization
+        function drawServiceAreas(org) {
+            clearServiceAreas();
+            
+            if (!org.service_areas || org.service_areas.length === 0) return;
+            if (!window.CHICAGO_NEIGHBORHOODS) {
+                console.log('Neighborhood polygon data not loaded');
+                return;
+            }
+            
+            const color = '#3b82f6';  // Blue color for service areas
+            
+            org.service_areas.forEach(areaName => {
+                // Convert area name to key format (lowercase, underscores)
+                const cleanName = areaName.toLowerCase()
+                    .replace(/['']/g, '')
+                    .replace(/[^a-z0-9]/g, '_')
+                    .replace(/_+/g, '_')
+                    .replace(/^_|_$/g, '');
+                
+                // Try different variations
+                const variations = [
+                    cleanName,
+                    cleanName.replace(/_/g, ''),
+                    areaName.toLowerCase().replace(/ /g, '_'),
+                    areaName.toLowerCase().replace(/[ -]/g, '_')
+                ];
+                
+                let coords = null;
+                for (const key of variations) {
+                    if (CHICAGO_NEIGHBORHOODS[key]) {
+                        coords = CHICAGO_NEIGHBORHOODS[key];
+                        break;
+                    }
+                }
+                
+                if (coords) {
+                    const polygon = L.polygon(coords, {
+                        color: color,
+                        weight: 2,
+                        opacity: 0.8,
+                        fillColor: color,
+                        fillOpacity: 0.15,
+                        className: 'service-area-polygon'
+                    }).addTo(map);
+                    
+                    // Add tooltip with neighborhood name on hover
+                    polygon.bindTooltip(areaName, {
+                        permanent: false,
+                        direction: 'center',
+                        className: 'neighborhood-tooltip'
+                    });
+                    
+                    serviceAreaPolygons.push(polygon);
+                }
+            });
+            
+            console.log(`Drew ${serviceAreaPolygons.length} service area polygons for ${org.name}`);
         }
 
         // Clear all markers
         function clearMarkers() {
             currentMarkers.forEach(marker => map.removeLayer(marker));
+            clearServiceAreas();
             currentMarkers = [];
         }
 
