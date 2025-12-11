@@ -37,13 +37,14 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "100",
     "neighborhoods": "We serve the entire city of Chicago, and our operations are based our of our headquarters in River North. We do not have any particular neighborhood where we do at least 10% of our work, though a high percentage of our consumers come from the south and west side neighborhoods of Chicago.",
     "primary_neighborhood": "River North",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "68% public, 22% private",
     "private_funding_sources": "Existing:\nMacArthur Foundation: $1,000,000\nFord Foundation $150,000\nCrown Family Philanthropies: $75,000\n \nAnticipated:\nChicago Community Trust: $150,000\nJoyce Foundation: $125,000\nSchreiber Family Philanthropy: $100,000",
     "public_funding_sources": "IDHS Williams/Colbert-$1,846,162 (existing amount, same amount anticipated for next year)\nIDHS CIL- $921,723 (existing amount, same amount anticipated for next year)\nHUD FHIP- $425,000 (existing amount, same amount anticipated for next year)",
     "city_category": "chicago",
     "lat": 41.8962915,
-    "lng": -87.631967
+    "lng": -87.631967,
+    "location_type": "City-Wide"
   },
   {
     "id": "2",
@@ -83,13 +84,14 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "100",
     "neighborhoods": "",
     "primary_neighborhood": "",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "",
     "private_funding_sources": "Private\n\nCrown Family Philanthropies - $400,000\nPolk Bros Foundation - $150,000\nAnonymous foundation - $125,000\n\nPublic\n\nChicago Department of Family Support Services - $39,840,663\nIllinois Department of Human Services - $25,707,886\nHousing and Urban Development - $4,884,205",
     "public_funding_sources": "Private\n\nCrown Family Philanthropies - $200,000\nChicago Community Trust - $100,000\nAnonymous foundation - $100,000\n\nPublic\n\nChicago Department of Family Support Services - $39,840,663\nIllinois Department of Human Services - $25,707,886\nHousing and Urban Development - $9,884,205",
     "city_category": "chicago",
     "lat": 41.8828013,
-    "lng": -87.6444681
+    "lng": -87.6444681,
+    "location_type": "City-Wide"
   },
   {
     "id": "3",
@@ -129,13 +131,14 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "",
     "neighborhoods": "",
     "primary_neighborhood": "",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
     "city_category": "chicago",
     "lat": 41.8781,
-    "lng": -87.6298
+    "lng": -87.6298,
+    "location_type": "City-Wide"
   },
   {
     "id": "4",
@@ -175,13 +178,14 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "",
     "neighborhoods": "",
     "primary_neighborhood": "",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
     "city_category": "other",
     "lat": 40.5200224,
-    "lng": -105.0461457
+    "lng": -105.0461457,
+    "location_type": "City-Wide"
   },
   {
     "id": "5",
@@ -377,7 +381,7 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "96",
     "neighborhoods": "",
     "primary_neighborhood": "West City-Wide Gate",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "",
     "private_funding_sources": "FY25 donors to date (FY start June 2024)\n\n- McCormick Foundation $400,000\n- The Chicago Community Trust - $200,000\n- US Bank - $50,000",
     "public_funding_sources": "FY25 anticipated donors\n\n- The Owens Foundation - $255,000\n- JPMorgan Chase - $250,000\n- Paul M. Angell Foundation - $90,000",
@@ -401,7 +405,8 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
       }
     ],
     "has_multiple_grants": true,
-    "grant_count": 2
+    "grant_count": 2,
+    "location_type": "City-Wide"
   },
   {
     "id": "11",
@@ -441,13 +446,14 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "Center on Halsted does not track income level.",
     "neighborhoods": "",
     "primary_neighborhood": "",
-    "secondary_neighborhood": "Lakeview, South Side",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood",
     "public_private_split": "For the current fiscal year, 25.5% of the total organizational budget is public funding.",
     "private_funding_sources": "Anonymous estate gift, $250,000 (current) \n\nMcDonald's Corporation, $218,600 (current and anticipated) \n\nAlphawood Foundation, $125,000 (current); $140,000 (anticipated) \n\nJB and MK Pritzker Family Foundation ($175,000 anticipated)",
     "public_funding_sources": "Illinois Department of Public Health, Illinois HIV Hotline: $624,000 (current and anticipated) \n\nIllinois Department of Human Services, Supportive Housing: $236,280 (current and anticipated) \n\nIllinois Department of Public Health, HIV testing: $199,710 (current and anticipated)",
     "city_category": "chicago",
     "lat": 41.9488651,
-    "lng": -87.6498854
+    "lng": -87.6498854,
+    "location_type": "South Side"
   },
   {
     "id": "12",
@@ -487,13 +493,14 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "100",
     "neighborhoods": "",
     "primary_neighborhood": "",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "",
     "private_funding_sources": "1.\tAnonymous Individual: $250,000  (FY25)\n2.\tCrown Family Philanthropies: $170,000  (FY25)\n3.\tAnonymous Family: $100,000  (FY25)\n\nCCH does not accept government funding and has no public funding sources.",
     "public_funding_sources": "1.\tCrown Family Philanthropies: $250,000 (FY26 \u2013 request pending) \n2.\tPolk Bros. Foundation: $64,000 (FY25 \u2013 awarded)\n3.\tPayne Family Foundation: $60,000 (FY25 \u2013 renewal request planned)\n\nCCH does not accept government funding and has no public funding sources.",
     "city_category": "chicago",
     "lat": 41.8755616,
-    "lng": -87.6244212
+    "lng": -87.6244212,
+    "location_type": "City-Wide"
   },
   {
     "id": "13",
@@ -533,7 +540,7 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "",
     "neighborhoods": "",
     "primary_neighborhood": "",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
@@ -557,7 +564,8 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
       }
     ],
     "has_multiple_grants": true,
-    "grant_count": 2
+    "grant_count": 2,
+    "location_type": "City-Wide"
   },
   {
     "id": "15",
@@ -597,13 +605,14 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "80%",
     "neighborhoods": "Douglas\nOakland Park\nFuller Park\nGrand Boulevard\nKenwood\nWashington Park\nHyde Park\nWoodlawn\nSouth Shore\nChatham\nAvalon Park\nSouth Chicago\nBurnside\nCalumet Heights\nRoseland\nPullman\nSouth Deering\nEast Side\nGarfield Ridge\nArcher Heights\nBrighton Park\nNew City\nWest Elsdon\nGage Park\nClearing\nWest Lawn\nChicago Lawn\nWest Englewood\nEnglewood\nGreater Grand Crossing",
     "primary_neighborhood": "Beverly/Morgan Park",
-    "secondary_neighborhood": "Douglas\nOakland Park\nFuller Park\nGrand Boulevard\nKenwood\nWashington Park\nHyde Park\nWoodlawn\nSouth Shore\nChatham\nAvalon Park\nSouth Chicago\nBurnside\nCalumet Heights\nRoseland\nPullman\nSouth Deering\nEast Side\nGarfield Ridge\nArcher Heights\nBrighton Park\nNew City\nWest Elsdon\nGage Park\nClearing\nWest Lawn\nChicago Lawn\nWest Englewood\nEnglewood\nGreater Grand Crossing",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge",
     "public_private_split": "80% private\n20% public",
     "private_funding_sources": "-Pritzker Foundation, $250,000-received\n-Rusu Family, $500,000-received\n-Summer Oaks Fund, $150,000-received",
     "public_funding_sources": "-City of Chicago Community Development Grant, $3,299,000-committed\n-Illinois State Department of Commerce & Economic Opportunity-$1,000,000-received",
     "city_category": "chicago",
     "lat": 42.0068234,
-    "lng": -87.6662477
+    "lng": -87.6662477,
+    "location_type": "South and West Sides"
   },
   {
     "id": "16",
@@ -643,7 +652,7 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "Of CCC credit students in FY24, 50% were eligible for Pell Grants, albeit this is a gross underestimation of students who can be considered \u201clow income\u201d as students may not be Pell eligible if they could not or did not submit a FAFSA or are ineligible for financial aid due to prior unsatisfactory academic progress or citizenship status.",
     "neighborhoods": "",
     "primary_neighborhood": "##NOT_FOUND##",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "",
     "private_funding_sources": "BNI Knight Impact Partners will be the first seed funder for this project. \n\nCCC Foundations top FY25 donors include the following:\n\u2022\tGoldman Sachs\t$292,028.26 \n\u2022\tChildren First Fund\t$287,403.57 \n\u2022\tAnonymous 2\t\t$250,000.00 \n\u2022\tAmerican Association of Community Colleges\t$165,000.00 \n\u2022\tSprague Foundation\t$125,263.00 \n\u2022\tJohnson Controls\t$100,000.00",
     "public_funding_sources": "Thanks to the leadership of Knight Impact Partners in hosting the BNI Funder's Briefing, CCCF has initiated discussions with several funders who have expressed interest in aspects of the BNI comprehensive strategy. We look forward to identifying anticipated funding sources as these conversations progress.",
@@ -667,7 +676,8 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
       }
     ],
     "has_multiple_grants": true,
-    "grant_count": 2
+    "grant_count": 2,
+    "location_type": "City-Wide"
   },
   {
     "id": "18",
@@ -707,7 +717,7 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "We prioritize projects that serve historically disinvested communities, yet our work benefits all Chicago and Cook County residents\u2014as everyone benefits from a more equitable, safe, and thriving region.",
     "neighborhoods": "",
     "primary_neighborhood": "The City-Wide",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "",
     "private_funding_sources": "1) Commercial Club Foundation, $1,470,000 (annual contribution)\n\n2) John D. and Catherine T. MacArthur Foundation, $600,000 (2-year grant)\n\n3) The Joyce Foundation, $500,000 (2-year grant)",
     "public_funding_sources": "",
@@ -731,7 +741,8 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
       }
     ],
     "has_multiple_grants": true,
-    "grant_count": 2
+    "grant_count": 2,
+    "location_type": "City-Wide"
   },
   {
     "id": "20",
@@ -881,13 +892,14 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "",
     "neighborhoods": "",
     "primary_neighborhood": "",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
     "city_category": "chicago",
     "lat": 41.8781,
-    "lng": -87.6298
+    "lng": -87.6298,
+    "location_type": "City-Wide"
   },
   {
     "id": "24",
@@ -931,7 +943,8 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "other",
+    "location_type": "State-Wide"
   },
   {
     "id": "25",
@@ -1127,13 +1140,14 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "99% of our guests are low-income",
     "neighborhoods": "",
     "primary_neighborhood": "",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "",
     "private_funding_sources": "Chicago Department of Family and Support Service ($3,517,152.83)\nIllinois Department of Human Services ($432,593.00)\nAll Chicago Making Homeless History ($410,802.97)",
     "public_funding_sources": "Chicago Department of Family and Support Service ($3,981,300)\nIllinois Department of Human Services ($416,340)\nAll Chicago Making Homeless History ($481,973)",
     "city_category": "chicago",
     "lat": 41.8755616,
-    "lng": -87.6244212
+    "lng": -87.6244212,
+    "location_type": "City-Wide"
   },
   {
     "id": "30",
@@ -1219,13 +1233,14 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "",
     "neighborhoods": "",
     "primary_neighborhood": "",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
     "city_category": "chicago",
     "lat": 41.8781,
-    "lng": -87.6298
+    "lng": -87.6298,
+    "location_type": "City-Wide"
   },
   {
     "id": "32",
@@ -1265,13 +1280,14 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "",
     "neighborhoods": "",
     "primary_neighborhood": "",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
     "city_category": "chicago",
     "lat": 41.8781,
-    "lng": -87.6298
+    "lng": -87.6298,
+    "location_type": "City-Wide"
   },
   {
     "id": "33",
@@ -1311,7 +1327,7 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "85",
     "neighborhoods": "",
     "primary_neighborhood": "##NOT_FOUND##",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "",
     "private_funding_sources": "Peter Kadens, $3.2 ($16M pledge)\nTheodore Koenig, $1.25M ($10M pledge)\nAnonymous Family Foundation, $1M ($5M pledge)",
     "public_funding_sources": "Peter Kadens, $3.2 ($16M pledge)\nTheodore Koenig, $1.25M ($10M pledge)\nAnonymous Family Foundation, $1M ($5M pledge)",
@@ -1335,7 +1351,8 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
       }
     ],
     "has_multiple_grants": true,
-    "grant_count": 2
+    "grant_count": 2,
+    "location_type": "City-Wide"
   },
   {
     "id": "35",
@@ -2144,7 +2161,7 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "97%",
     "neighborhoods": "",
     "primary_neighborhood": "City-Wide, Chicago",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "",
     "private_funding_sources": "Silicon Valley Community Foundation ($7,000,000) 7/1/2022 \n\nPritzker Foundation ($5,000,000) 11/21/2022-12/31/2026 \n\nPwC Charitable Foundation ($3,000,000) 12/31/2025",
     "public_funding_sources": "Unconfirmed, ask amounts \n\nJPMC Foundation $1,000.000 \n\nECMC $800,000 \n\nArrow Impact $600,000",
@@ -2168,7 +2185,8 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
       }
     ],
     "has_multiple_grants": true,
-    "grant_count": 2
+    "grant_count": 2,
+    "location_type": "City-Wide"
   },
   {
     "id": "60",
@@ -2232,7 +2250,8 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
       }
     ],
     "has_multiple_grants": true,
-    "grant_count": 2
+    "grant_count": 2,
+    "location_type": "National"
   },
   {
     "id": "62",
@@ -2272,11 +2291,12 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "",
     "neighborhoods": "",
     "primary_neighborhood": "",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "other",
+    "location_type": "City-Wide"
   },
   {
     "id": "63",
@@ -2316,13 +2336,14 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "",
     "neighborhoods": "",
     "primary_neighborhood": "",
-    "secondary_neighborhood": "South and West Sides",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge",
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
     "city_category": "chicago",
     "lat": 41.8781,
-    "lng": -87.6298
+    "lng": -87.6298,
+    "location_type": "South and West Sides"
   },
   {
     "id": "64",
@@ -2454,11 +2475,12 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "",
     "neighborhoods": "",
     "primary_neighborhood": "",
-    "secondary_neighborhood": "South and West Sides",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge",
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
-    "city_category": "other"
+    "city_category": "other",
+    "location_type": "South and West Sides"
   },
   {
     "id": "67",
@@ -2728,13 +2750,14 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "100%",
     "neighborhoods": "",
     "primary_neighborhood": "City-Wide",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "Approximately 16 percent of our budget for FY26 will rely on public sources.",
     "private_funding_sources": "Amounts below are FY26 only. In some cases, this is a portion of a multi-year award.\n\nMargot and Tom Pritzker: $1.5M\nArnold Ventures: $433K\nChicago Community Trust: $300K",
     "public_funding_sources": "Amounts below are FY26 only. In some cases, this is a portion of a multi-year award.\n\nCook County Bureau of Economic Development: $370K\nNational Science Foundation: $320K\nIllinois Department of Employment Security: $115,000",
     "city_category": "chicago",
     "lat": 41.8755616,
-    "lng": -87.6244212
+    "lng": -87.6244212,
+    "location_type": "City-Wide"
   },
   {
     "id": "73",
@@ -2820,13 +2843,14 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "75",
     "neighborhoods": "",
     "primary_neighborhood": "##NOT_FOUND##",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "80% public/government (local, state and federal) and 20% private.",
     "private_funding_sources": "JP Morgan Chase Foundation $200,000 over two years (existing/anticipated)\nColeman Foundation $200,000 over two years (existing/anticipated)\nYWCA USA $131,000 existing",
     "public_funding_sources": "Department of Health and Human Services - $11,057,107 existing\nIllinois Department of Human Services - $5,223,492 existing\nIllinois Coalition Against Sexual Assault - $4,915,259 existing",
     "city_category": "chicago",
     "lat": 41.8755616,
-    "lng": -87.6244212
+    "lng": -87.6244212,
+    "location_type": "City-Wide"
   },
   {
     "id": "75",
@@ -2872,7 +2896,8 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "public_funding_sources": "",
     "city_category": "other",
     "lat": 38.9072,
-    "lng": -77.0369
+    "lng": -77.0369,
+    "location_type": "National"
   },
   {
     "id": "76",
@@ -3006,13 +3031,14 @@ const KNIGHT_ORGANIZATIONS_DATA_COMBINED = [
     "low_income_percentage": "",
     "neighborhoods": "",
     "primary_neighborhood": "",
-    "secondary_neighborhood": "City-Wide",
+    "secondary_neighborhood": "Douglas, Armour Square, Fuller Park, Bridgeport, Kenwood, Grand Boulevard, Hyde Park, Woodlawn, Washington Park, Greater Grand Crossing, South Shore, Oakland, South Chicago, Avalon Park, Chatham, Burnside, Calumet Heights, East Side, South Deering, Pullman, Roseland, Riverdale, Hegewisch, West Pullman, Auburn Gresham, Ashburn, Beverly, Washington Heights, Morgan Park, Mount Greenwood, Austin, Humboldt Park, West Town, West Garfield Park, East Garfield Park, Near West Side, North Lawndale, Lower West Side, South Lawndale, McKinley Park, New City, Englewood, West Englewood, Brighton Park, Gage Park, Chicago Lawn, West Elsdon, Archer Heights, West Lawn, Clearing, Garfield Ridge, Rogers Park, West Ridge, Uptown, Lincoln Square, Edison Park, Norwood Park, Jefferson Park, Forest Glen, North Park, Albany Park, O'Hare, Edgewater, Lincoln Park, Lake View, North Center, Avondale, Logan Square, Portage Park, Irving Park, Dunning, Montclare, Belmont Cragin, Hermosa, Loop, Near North Side, Near South Side",
     "public_private_split": "",
     "private_funding_sources": "",
     "public_funding_sources": "",
     "city_category": "chicago",
     "lat": 41.8781,
-    "lng": -87.6298
+    "lng": -87.6298,
+    "location_type": "City-Wide"
   },
   {
     "id": "79",
