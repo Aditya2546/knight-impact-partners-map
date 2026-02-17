@@ -104,6 +104,80 @@
             color: #ffffff;
         }
         
+        /* Google-style Autocomplete */
+        .autocomplete-wrapper {
+            position: relative;
+        }
+        
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #2a2a2a;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+        
+        .autocomplete-dropdown.show {
+            display: block;
+        }
+        
+        .autocomplete-item {
+            padding: 12px 14px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.15s ease;
+        }
+        
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+        
+        .autocomplete-item:hover,
+        .autocomplete-item.highlighted {
+            background: rgba(59, 130, 246, 0.2);
+        }
+        
+        .autocomplete-item-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+        
+        .autocomplete-item-name .match {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        
+        .autocomplete-item-stats {
+            font-size: 12px;
+            color: #9ca3af;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .autocomplete-item-stats span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .autocomplete-no-results {
+            padding: 16px 14px;
+            color: #9ca3af;
+            font-size: 13px;
+            text-align: center;
+        }
+        
         .stats {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
@@ -223,8 +297,12 @@
             
             <div class="controls">
                 <div class="control-group">
-                    <label class="control-label">Select Organization</label>
-                    <select id="organizationSelect" class="control-select">
+                    <label class="control-label">Search Organizations</label>
+                    <div class="autocomplete-wrapper">
+                        <input type="text" id="orgSearchInput" class="control-select" placeholder="Type to search..." autocomplete="off">
+                        <div id="autocompleteDropdown" class="autocomplete-dropdown"></div>
+                    </div>
+                    <select id="organizationSelect" class="control-select" style="margin-top: 8px;">
                         <option value="">All Organizations</option>
                     </select>
                 </div>
@@ -233,9 +311,7 @@
                     <label class="control-label">Filter by City</label>
                     <select id="citySelect" class="control-select">
                         <option value="">All Cities</option>
-                        <option value="chicago">Chicago Area (50 orgs)</option>
-                        <option value="los_angeles">Los Angeles (2 orgs)</option>
-                        <option value="other">Other Cities (8 orgs)</option>
+                        <option value="chicago">Chicago (55 orgs)</option>
                     </select>
                 </div>
                 
@@ -244,17 +320,36 @@
                     <select id="categorySelect" class="control-select">
                         <option value="">All Categories</option>
                         <option value="human services">Human Services</option>
-                        <option value="health">Health</option>
-                        <option value="education">Education</option>
                         <option value="community building">Community Building</option>
+                        <option value="systems building">Systems Building</option>
+                        <option value="education">Education</option>
+                        <option value="health">Health</option>
                     </select>
                 </div>
                 
                 <div class="control-group">
-                    <label class="control-label">Filter by Service Area</label>
-                    <select id="serviceAreaSelect" class="control-select">
-                        <option value="">-- Select Area --</option>
-                        <option value="ALL_AREAS">Show All 77 Neighborhoods</option>
+                    <label class="control-label">Neighborhoods (77 areas)</label>
+                    <select id="neighborhoodSelect" class="control-select">
+                        <option value="">-- Select Neighborhood --</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Regional (5 regions)</label>
+                    <select id="regionalSelect" class="control-select">
+                        <option value="">-- Select Region --</option>
+                        <option value="South Side">South Side</option>
+                        <option value="West Side">West Side</option>
+                        <option value="Suburban Cook">Suburban Cook</option>
+                        <option value="Lake County">Lake County</option>
+                        <option value="Evanston">Evanston</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Citywide (22 orgs)</label>
+                    <select id="citywideSelect" class="control-select">
+                        <option value="">-- Select Organization --</option>
                     </select>
                 </div>
             </div>
@@ -278,16 +373,24 @@
                     <span class="stat-value">77</span>
                 </div>
             </div>
+            
+            <a href="dashboard.html" style="display: block; margin-top: 20px; padding: 12px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #9ca3af; text-decoration: none; font-size: 13px; text-align: center; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(255,255,255,0.1)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.color='#9ca3af'">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 8px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                Admin Dashboard
+            </a>
         </div>
         
         <div id="map"></div>
     </div>
 
     <script>
-        // Initialize map centered to show all locations
+        // Initialize map centered on Chicago
         let map = L.map('map', {
-            center: [39.0, -95.0], // Centered to show US with Chicago, LA, and DC
-            zoom: 4,
+            center: [41.8781, -87.6298],
+            zoom: 10,
             zoomControl: true,
             attributionControl: true
         });
@@ -313,15 +416,7 @@
         const cityBoundaries = {
             chicago: {
                 center: [41.8781, -87.6298],
-                bounds: [[41.6444, -87.9073], [42.0230, -87.5240]]
-            },
-            los_angeles: {
-                center: [34.0522, -118.2437],
-                bounds: [[33.7037, -118.6681], [34.3373, -117.6462]]
-            },
-            other: {
-                center: [39.0, -95.0],
-                bounds: [[25.0, -125.0], [49.0, -65.0]]
+                bounds: [[41.6444, -87.9073], [42.0718, -87.5240]]
             }
         };
 
@@ -343,7 +438,7 @@
                 'Human Services': '#3b82f6',
                 'Community Development': '#10b981',
                 'Education': '#f59e0b',
-                'Health': '#ef4444',
+                'Health': '#a855f7',
                 'Health and Human Services': '#8b5cf6',
                 'Systems Building': '#06b6d4',
                 'Community Building': '#84cc16'
@@ -526,28 +621,37 @@
         function highlightServiceArea(areaName, orgsInArea) {
             clearServiceAreas();
             
-            if (typeof CHICAGO_NEIGHBORHOODS === 'undefined') return;
+            if (typeof CHICAGO_NEIGHBORHOODS === 'undefined') {
+                console.log('CHICAGO_NEIGHBORHOODS not loaded');
+                return;
+            }
             
-            // Convert area name to key format
-            const key = areaName.toLowerCase().replace(/ /g, '_').replace(/'/g, '').replace(/-/g, '_');
-            const coords = CHICAGO_NEIGHBORHOODS[key];
+            // areaName is already in snake_case from dropdown value
+            const key = areaName;
             
-            if (!coords) return;
+            // Check if this is a region that contains multiple community areas
+            let areasToHighlight = [];
+            if (typeof REGION_COMMUNITY_AREAS !== 'undefined' && REGION_COMMUNITY_AREAS[key]) {
+                // This is a region - get all community areas
+                areasToHighlight = REGION_COMMUNITY_AREAS[key];
+            } else if (CHICAGO_NEIGHBORHOODS[key]) {
+                // Single neighborhood
+                areasToHighlight = [key];
+            } else {
+                console.log('No coordinates found for:', key);
+                return;
+            }
             
-            // Draw the neighborhood polygon
-            const polygon = L.polygon(coords, {
-                color: '#f59e0b',
-                weight: 3,
-                opacity: 1,
-                fillColor: '#f59e0b',
-                fillOpacity: 0.4
-            }).addTo(map);
+            // Convert snake_case to display name
+            const displayName = areaName.split('_').map(word => 
+                word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ');
             
-            // Build popup content with list of orgs
+            // Build popup content with list of orgs (same for all polygons)
             let popupContent = `
                 <div style="font-family: 'Inter', sans-serif; padding: 12px; min-width: 280px; max-height: 400px; overflow-y: auto;">
                     <h3 style="margin: 0 0 12px 0; color: #ffffff; font-size: 16px; font-weight: 600;">
-                        📍 ${areaName}
+                        📍 ${displayName}
                     </h3>
                     <div style="font-size: 13px; color: #a1a1aa; margin-bottom: 12px;">
                         ${orgsInArea.length} organization${orgsInArea.length !== 1 ? 's' : ''} serving this area
@@ -569,18 +673,59 @@
             
             popupContent += `</div></div>`;
             
-            polygon.bindPopup(popupContent, {
-                maxWidth: 350,
-                className: 'service-area-popup'
+            // Track bounds for all polygons
+            let allBounds = null;
+            let firstPolygon = null;
+            
+            // Draw all polygons for this region/neighborhood
+            areasToHighlight.forEach(area => {
+                let polygonCoords;
+                
+                // Special handling for suburban_cook - draw as donut with Chicago hole
+                if (area === 'suburban_cook' && typeof SUBURBAN_COOK_POLYGON !== 'undefined') {
+                    // Leaflet polygon with hole: [outerRing, holeRing]
+                    polygonCoords = [SUBURBAN_COOK_POLYGON.outer, SUBURBAN_COOK_POLYGON.hole];
+                } else {
+                    const coords = CHICAGO_NEIGHBORHOODS[area];
+                    if (!coords) return;
+                    polygonCoords = coords;
+                }
+                
+                const polygon = L.polygon(polygonCoords, {
+                    color: '#f59e0b',
+                    weight: 2,
+                    opacity: 1,
+                    fillColor: '#f59e0b',
+                    fillOpacity: 0.3
+                }).addTo(map);
+                
+                // Bind popup to each polygon
+                polygon.bindPopup(popupContent, {
+                    maxWidth: 350,
+                    className: 'service-area-popup'
+                });
+                
+                // Expand bounds
+                if (!allBounds) {
+                    allBounds = polygon.getBounds();
+                    firstPolygon = polygon;
+                } else {
+                    allBounds.extend(polygon.getBounds());
+                }
+                
+                serviceAreaPolygons.push(polygon);
             });
             
-            // Open popup automatically
-            polygon.openPopup();
+            // Open popup on first polygon
+            if (firstPolygon) {
+                firstPolygon.openPopup();
+            }
             
-            // Zoom to the neighborhood
-            map.fitBounds(polygon.getBounds().pad(0.2));
+            // Zoom to fit all polygons
+            if (allBounds) {
+                map.fitBounds(allBounds.pad(0.1));
+            }
             
-            serviceAreaPolygons.push(polygon);
             bringMarkersToFront();
         }
 
@@ -602,7 +747,7 @@
                 'Human Services': '#3b82f6',
                 'Community Building': '#84cc16',
                 'Education': '#f59e0b',
-                'Health': '#ef4444',
+                'Health': '#a855f7',
                 'Community Building, Health, Human Services, Education': '#a855f7'
             };
             const color = categoryColors[org.category] || '#3b82f6';
@@ -676,8 +821,13 @@
                         fillOpacity: 0.35
                     }).addTo(map);
                     
+                    // Convert snake_case to display name for tooltip
+                    const displayName = areaName.split('_').map(word => 
+                        word.charAt(0).toUpperCase() + word.slice(1)
+                    ).join(' ');
+                    
                     // Add tooltip with neighborhood name on hover
-                    polygon.bindTooltip(areaName, {
+                    polygon.bindTooltip(displayName, {
                         permanent: false,
                         direction: 'center',
                         className: 'neighborhood-tooltip',
@@ -722,115 +872,152 @@
             const selectedOrg = document.getElementById('organizationSelect').value;
             const selectedCity = document.getElementById('citySelect').value;
             const selectedCategory = document.getElementById('categorySelect').value;
-            const selectedServiceArea = document.getElementById('serviceAreaSelect').value;
+            const selectedNeighborhood = document.getElementById('neighborhoodSelect').value;
+            const selectedRegion = document.getElementById('regionalSelect').value;
+            const selectedCitywideOrg = document.getElementById('citywideSelect').value;
             
             clearMarkers();
             clearServiceAreas();
             
             let filteredOrgs = organizationData;
             
+            // Filter by specific organization (from org dropdown or citywide dropdown)
             if (selectedOrg) {
                 filteredOrgs = filteredOrgs.filter(org => org.id === selectedOrg);
+            } else if (selectedCitywideOrg) {
+                filteredOrgs = filteredOrgs.filter(org => org.id === selectedCitywideOrg);
             }
             
+            // Filter by neighborhood (using service_areas)
+            if (selectedNeighborhood) {
+                filteredOrgs = filteredOrgs.filter(org => 
+                    org.service_areas && org.service_areas.includes(selectedNeighborhood)
+                );
+            }
+            
+            // Filter by region
+            if (selectedRegion) {
+                const regionKey = selectedRegion.toLowerCase().replace(/ /g, '_');
+                
+                // Get community areas for this region (if defined)
+                const regionAreas = (typeof REGION_COMMUNITY_AREAS !== 'undefined') 
+                    ? REGION_COMMUNITY_AREAS[regionKey] 
+                    : null;
+                
+                filteredOrgs = filteredOrgs.filter(org => {
+                    // Check by service_areas_type
+                    const stype = org.service_areas_type || '';
+                    
+                    if (selectedRegion === 'Evanston') {
+                        return stype.includes('Evanston') || 
+                               (org.service_areas && org.service_areas.includes('evanston'));
+                    }
+                    if (selectedRegion === 'Suburban Cook') {
+                        // Orgs serving Evanston or mixed areas serve Suburban Cook
+                        return stype.includes('Evanston');
+                    }
+                    if (selectedRegion === 'Lake County') {
+                        // Erie Family Health serves Lake County (Evanston Mixed)
+                        return stype === 'Evanston Mixed';
+                    }
+                    if (selectedRegion === 'South Side' || selectedRegion === 'West Side') {
+                        // Check if org's service_areas overlap with region's community areas
+                        if (regionAreas && org.service_areas) {
+                            return org.service_areas.some(area => regionAreas.includes(area));
+                        }
+                        // Also include South West Sides orgs for both
+                        if (stype === 'South West Sides') return true;
+                    }
+                    return false;
+                });
+            }
+            
+            // Filter by city
             if (selectedCity) {
                 filteredOrgs = filteredOrgs.filter(org => org.city_category === selectedCity);
             }
             
-            // Category and Service Area are mutually exclusive
-            // Category filter - match if category CONTAINS the selected value
-            if (selectedCategory && !selectedServiceArea) {
+            // Filter by category
+            if (selectedCategory) {
                 filteredOrgs = filteredOrgs.filter(org => 
                     org.category && org.category.toLowerCase().includes(selectedCategory.toLowerCase())
                 );
             }
             
-            // Service area filter - match if org serves that area
-            if (selectedServiceArea && selectedServiceArea !== 'ALL_AREAS' && !selectedCategory) {
-                filteredOrgs = filteredOrgs.filter(org => 
-                    org.service_areas && org.service_areas.includes(selectedServiceArea)
-                );
-            }
-            
-            // If "Show All 77 Neighborhoods" is selected, don't show markers - only polygons
-            if (selectedServiceArea === 'ALL_AREAS') {
-                // Don't add markers, just show all polygons below
-            } else {
+            // Add markers for filtered organizations (unless neighborhood/region selected - show polygon instead)
+            if (!selectedNeighborhood && !selectedRegion) {
                 filteredOrgs.forEach(org => {
                     addOrganizationMarker(org);
                 });
             }
             
-            // If a single organization is selected, draw its service areas automatically
-            if (selectedOrg && filteredOrgs.length === 1) {
+            // If a single organization is selected, draw its service areas
+            if ((selectedOrg || selectedCitywideOrg) && filteredOrgs.length === 1) {
                 const org = filteredOrgs[0];
                 drawServiceAreas(org);
-                
-                // Zoom to Chicago to see the service areas better
-                if (org.city_category === 'chicago') {
-                    map.setView([41.8781, -87.6298], 11);
-                }
             }
             
-            // If service area is selected, highlight that neighborhood and show orgs popup
-            if (selectedServiceArea && !selectedOrg) {
-                if (selectedServiceArea === 'ALL_AREAS') {
-                    // Show all 77 Chicago neighborhoods
-                    showAllNeighborhoods();
-                } else {
-                    highlightServiceArea(selectedServiceArea, filteredOrgs);
-                }
+            // If neighborhood is selected, highlight it and show orgs popup on hover
+            if (selectedNeighborhood && !selectedOrg && !selectedCitywideOrg) {
+                highlightServiceArea(selectedNeighborhood, filteredOrgs);
+            }
+            
+            // If region is selected, highlight it and show orgs popup
+            if (selectedRegion && !selectedOrg && !selectedCitywideOrg) {
+                // Convert region name to snake_case for polygon lookup
+                const regionKey = selectedRegion.toLowerCase().replace(/ /g, '_');
+                highlightServiceArea(regionKey, filteredOrgs);
             }
             
             // Update stats
             updateStats(filteredOrgs);
             
-            // Adjust map view if filtering by city
-            if (selectedCity && cityBoundaries[selectedCity]) {
-                const boundary = cityBoundaries[selectedCity];
-                if (selectedCity === 'chicago') {
-                    map.setView(boundary.center, 10);
-                } else if (selectedCity === 'los_angeles') {
-                    console.log('Zooming to LA:', boundary.center);
-                    map.setView(boundary.center, 10);
-                } else if (selectedCity === 'other') {
-                    map.setView(boundary.center, 4);
-                }
-            } else if (filteredOrgs.length > 0) {
-                // Fit to show all filtered organizations
-                const validMarkers = currentMarkers.filter(marker => marker.getLatLng);
-                if (validMarkers.length > 0) {
-                    const group = new L.featureGroup(validMarkers);
-                    map.fitBounds(group.getBounds().pad(0.1));
-                }
+            // Auto-zoom based on filter selection
+            if (selectedCity === 'chicago') {
+                map.setView([41.8781, -87.6298], 10);
+            } else if ((selectedOrg || selectedCitywideOrg) && filteredOrgs.length === 1) {
+                const org = filteredOrgs[0];
+                map.setView([41.8781, -87.6298], 11);
+            } else if (selectedNeighborhood) {
+                // Zoom handled by highlightServiceArea
+            } else if (selectedRegion) {
+                // Zoom handled by highlightServiceArea
+            } else if (currentMarkers.length > 0) {
+                const group = new L.featureGroup(currentMarkers);
+                map.fitBounds(group.getBounds().pad(0.1));
             }
         }
 
         // Update statistics
         function updateStats(orgs) {
-            document.getElementById('totalOrgs').textContent = orgs.length;
+            const totalOrgsEl = document.getElementById('totalOrgs');
+            const totalFundingEl = document.getElementById('totalFunding');
             
-            const totalAwarded = orgs.reduce((sum, org) => sum + (Number(org.grant_amount_awarded) || 0), 0);
-            // Format as millions if over 1M
-            if (totalAwarded >= 1000000) {
-                document.getElementById('totalFunding').textContent = `$${(totalAwarded / 1000000).toFixed(1)}M`;
-            } else {
-                document.getElementById('totalFunding').textContent = `$${totalAwarded.toLocaleString()}`;
+            if (totalOrgsEl) {
+                totalOrgsEl.textContent = orgs.length;
             }
             
-            // Update Chicago orgs count
-            const chicagoCount = orgs.filter(o => o.city_category === 'chicago').length;
-            document.getElementById('chicagoOrgs').textContent = chicagoCount;
+            const totalAwarded = orgs.reduce((sum, org) => sum + (Number(org.grant_amount_awarded) || 0), 0);
+            if (totalFundingEl) {
+                // Format as millions if over 1M
+                if (totalAwarded >= 1000000) {
+                    totalFundingEl.textContent = `$${(totalAwarded / 1000000).toFixed(1)}M`;
+                } else {
+                    totalFundingEl.textContent = `$${totalAwarded.toLocaleString()}`;
+                }
+            }
         }
 
         // Populate dropdowns
         function populateDropdowns() {
             const orgSelect = document.getElementById('organizationSelect');
-            const serviceAreaSelect = document.getElementById('serviceAreaSelect');
+            const neighborhoodSelect = document.getElementById('neighborhoodSelect');
+            const citywideSelect = document.getElementById('citywideSelect');
             
-            // Clear existing options (except "All")
+            // Clear existing options
             orgSelect.innerHTML = '<option value="">All Organizations</option>';
-            serviceAreaSelect.innerHTML = '<option value="">-- Select Area --</option><option value="ALL_AREAS">Show All 77 Neighborhoods</option>';
+            neighborhoodSelect.innerHTML = '<option value="">-- Select Neighborhood --</option>';
+            citywideSelect.innerHTML = '<option value="">-- Select Organization --</option>';
             
             // Populate organization dropdown
             organizationData.forEach(org => {
@@ -840,63 +1027,247 @@
                 orgSelect.appendChild(option);
             });
             
-            // Populate service area dropdown with all 77 Chicago community areas
+            // Populate neighborhoods dropdown using service_areas (like old Service Area filter)
             const allServiceAreas = new Set();
             organizationData.forEach(org => {
                 if (org.service_areas) {
                     org.service_areas.forEach(area => allServiceAreas.add(area));
                 }
             });
-            
-            // Sort alphabetically
+            // Sort and format display names (snake_case to Title Case)
             [...allServiceAreas].sort().forEach(area => {
                 const option = document.createElement('option');
                 option.value = area;
-                option.textContent = area;
-                serviceAreaSelect.appendChild(option);
+                // Convert snake_case to Title Case
+                const displayName = area.split('_').map(word => 
+                    word.charAt(0).toUpperCase() + word.slice(1)
+                ).join(' ');
+                option.textContent = displayName;
+                neighborhoodSelect.appendChild(option);
             });
+            
+            // Populate citywide dropdown (orgs with service_areas_type = 'City Wide' or 'State Wide')
+            organizationData
+                .filter(org => org.service_areas_type === 'City Wide' || org.service_areas_type === 'State Wide')
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .forEach(org => {
+                    const option = document.createElement('option');
+                    option.value = org.id;
+                    option.textContent = org.name;
+                    citywideSelect.appendChild(option);
+                });
         }
 
-        // Load organization data (placeholder - will be replaced with Excel data)
+        // Load organization data
         function loadOrganizationData(data) {
             console.log('Loading organization data:', data.length, 'organizations');
-            
-            // Debug: Check LA organizations
-            const laOrgs = data.filter(org => org.city_category === 'los_angeles');
-            console.log('LA organizations found:', laOrgs.length, laOrgs.map(org => org.name));
-            
-            // Debug: Check Evanston categorization
-            const evanstonOrgs = data.filter(org => org.city && org.city.toLowerCase() === 'evanston');
-            console.log('Evanston organizations:', evanstonOrgs.map(org => `${org.name} (category: ${org.city_category})`));
-            
             organizationData = data;
             populateDropdowns();
             filterOrganizations();
         }
 
-        // Event listeners
+        // Helper to clear other filter dropdowns when one is selected
+        function clearOtherFilters(exceptId) {
+            const filterIds = ['organizationSelect', 'neighborhoodSelect', 'regionalSelect', 'citywideSelect', 'categorySelect'];
+            filterIds.forEach(id => {
+                if (id !== exceptId) {
+                    document.getElementById(id).value = '';
+                }
+            });
+            // Also clear search input and autocomplete if not selecting from org dropdown
+            if (exceptId !== 'organizationSelect') {
+                document.getElementById('orgSearchInput').value = '';
+                document.getElementById('autocompleteDropdown').classList.remove('show');
+                document.getElementById('autocompleteDropdown').innerHTML = '';
+                // Repopulate full org list
+                const orgSelect = document.getElementById('organizationSelect');
+                orgSelect.innerHTML = '<option value="">All Organizations</option>';
+                organizationData.forEach(org => {
+                    const option = document.createElement('option');
+                    option.value = org.id;
+                    option.textContent = org.name;
+                    orgSelect.appendChild(option);
+                });
+            }
+        }
+        
+        // Google-style Autocomplete functionality
+        const searchInput = document.getElementById('orgSearchInput');
+        const autocompleteDropdown = document.getElementById('autocompleteDropdown');
+        let highlightedIndex = -1;
+        
+        function highlightMatch(text, searchTerm) {
+            if (!searchTerm) return text;
+            const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            return text.replace(regex, '<span class="match">$1</span>');
+        }
+        
+        function formatServiceAreas(org) {
+            if (org.service_areas_type === 'City Wide') return 'Citywide';
+            if (org.service_areas_type === 'State Wide') return 'Statewide';
+            if (org.service_areas && org.service_areas.length > 0) {
+                const count = org.service_areas.length;
+                return count === 1 ? '1 area' : `${count} areas`;
+            }
+            return '';
+        }
+        
+        function updateAutocomplete() {
+            const searchTerm = searchInput.value.trim();
+            const searchTermLower = searchTerm.toLowerCase();
+            
+            if (!searchTerm) {
+                autocompleteDropdown.classList.remove('show');
+                autocompleteDropdown.innerHTML = '';
+                highlightedIndex = -1;
+                return;
+            }
+            
+            // Find matching organizations
+            const matches = organizationData.filter(org => 
+                org.name.toLowerCase().includes(searchTermLower)
+            ).slice(0, 8); // Limit to 8 results
+            
+            if (matches.length === 0) {
+                autocompleteDropdown.innerHTML = '<div class="autocomplete-no-results">No organizations found</div>';
+                autocompleteDropdown.classList.add('show');
+                highlightedIndex = -1;
+                return;
+            }
+            
+            autocompleteDropdown.innerHTML = matches.map((org, index) => {
+                const serviceInfo = formatServiceAreas(org);
+                const category = org.category || '';
+                
+                return `
+                    <div class="autocomplete-item" data-id="${org.id}" data-index="${index}">
+                        <div class="autocomplete-item-name">${highlightMatch(org.name, searchTerm)}</div>
+                        <div class="autocomplete-item-stats">
+                            ${category ? `<span>📁 ${category}</span>` : ''}
+                            ${serviceInfo ? `<span>📍 ${serviceInfo}</span>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            autocompleteDropdown.classList.add('show');
+            highlightedIndex = -1;
+            
+            // Add click handlers
+            autocompleteDropdown.querySelectorAll('.autocomplete-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    selectOrganization(this.dataset.id);
+                });
+            });
+        }
+        
+        function selectOrganization(orgId) {
+            const org = organizationData.find(o => o.id === orgId);
+            if (!org) return;
+            
+            searchInput.value = org.name;
+            autocompleteDropdown.classList.remove('show');
+            highlightedIndex = -1;
+            
+            // Select in dropdown
+            const orgSelect = document.getElementById('organizationSelect');
+            orgSelect.innerHTML = '<option value="">All Organizations</option>';
+            organizationData.forEach(o => {
+                const option = document.createElement('option');
+                option.value = o.id;
+                option.textContent = o.name;
+                if (o.id === orgId) option.selected = true;
+                orgSelect.appendChild(option);
+            });
+            
+            clearOtherFilters('organizationSelect');
+            filterOrganizations();
+        }
+        
+        function updateHighlight() {
+            const items = autocompleteDropdown.querySelectorAll('.autocomplete-item');
+            items.forEach((item, index) => {
+                item.classList.toggle('highlighted', index === highlightedIndex);
+            });
+            
+            // Scroll highlighted item into view
+            if (highlightedIndex >= 0 && items[highlightedIndex]) {
+                items[highlightedIndex].scrollIntoView({ block: 'nearest' });
+            }
+        }
+        
+        searchInput.addEventListener('input', updateAutocomplete);
+        
+        searchInput.addEventListener('keydown', function(e) {
+            const items = autocompleteDropdown.querySelectorAll('.autocomplete-item');
+            
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (items.length > 0) {
+                    highlightedIndex = Math.min(highlightedIndex + 1, items.length - 1);
+                    updateHighlight();
+                }
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (items.length > 0) {
+                    highlightedIndex = Math.max(highlightedIndex - 1, 0);
+                    updateHighlight();
+                }
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (highlightedIndex >= 0 && items[highlightedIndex]) {
+                    selectOrganization(items[highlightedIndex].dataset.id);
+                }
+            } else if (e.key === 'Escape') {
+                autocompleteDropdown.classList.remove('show');
+                highlightedIndex = -1;
+            }
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!searchInput.contains(e.target) && !autocompleteDropdown.contains(e.target)) {
+                autocompleteDropdown.classList.remove('show');
+                highlightedIndex = -1;
+            }
+        });
+        
+        // Show dropdown on focus if there's text
+        searchInput.addEventListener('focus', function() {
+            if (this.value.trim()) {
+                updateAutocomplete();
+            }
+        });
+        
+        // Clear search when dropdown changes
         document.getElementById('organizationSelect').addEventListener('change', function() {
-            // When org is selected, clear service area and category filters
             if (this.value) {
-                document.getElementById('serviceAreaSelect').value = '';
-                document.getElementById('categorySelect').value = '';
+                clearOtherFilters('organizationSelect');
             }
             filterOrganizations();
         });
         document.getElementById('citySelect').addEventListener('change', filterOrganizations);
         document.getElementById('categorySelect').addEventListener('change', function() {
-            // When category is selected, clear org and service area filters
             if (this.value) {
-                document.getElementById('organizationSelect').value = '';
-                document.getElementById('serviceAreaSelect').value = '';
+                clearOtherFilters('categorySelect');
             }
             filterOrganizations();
         });
-        document.getElementById('serviceAreaSelect').addEventListener('change', function() {
-            // When service area is selected, clear org and category filters
+        document.getElementById('neighborhoodSelect').addEventListener('change', function() {
             if (this.value) {
-                document.getElementById('organizationSelect').value = '';
-                document.getElementById('categorySelect').value = '';
+                clearOtherFilters('neighborhoodSelect');
+            }
+            filterOrganizations();
+        });
+        document.getElementById('regionalSelect').addEventListener('change', function() {
+            if (this.value) {
+                clearOtherFilters('regionalSelect');
+            }
+            filterOrganizations();
+        });
+        document.getElementById('citywideSelect').addEventListener('change', function() {
+            if (this.value) {
+                clearOtherFilters('citywideSelect');
             }
             filterOrganizations();
         });

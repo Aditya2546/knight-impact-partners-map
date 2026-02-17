@@ -1,0 +1,2702 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knight Impact Partners - Admin Dashboard</title>
+    
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Knight Impact Partners Data -->
+    <script src="knight_data.js"></script>
+    
+    <!-- Chicago Neighborhood Data for service areas -->
+    <script src="chicago_neighborhoods.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a1a;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        
+        .header-title {
+            font-size: 14px;
+            color: #9ca3af;
+            padding-left: 20px;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .header-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        
+        .header-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .header-btn.primary {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-color: transparent;
+        }
+        
+        .header-btn.primary:hover {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+        }
+        
+        .header-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* History Actions */
+        .history-actions {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .history-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: #9ca3af;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .history-btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+        
+        .history-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        /* Main Content */
+        .main {
+            padding: 24px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.2s ease;
+        }
+        
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .stat-label {
+            font-size: 13px;
+            color: #9ca3af;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        
+        .stat-value.currency::before {
+            content: '$';
+        }
+        
+        .stat-sub {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+        
+        /* Toolbar */
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            gap: 16px;
+        }
+        
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+        
+        .search-box {
+            flex: 1;
+            max-width: 400px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 10px 12px 10px 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        
+        .search-box input:focus {
+            border-color: #3b82f6;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .search-box input::placeholder {
+            color: #6b7280;
+        }
+        
+        .search-box svg {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+        }
+        
+        .filter-select {
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+            min-width: 150px;
+        }
+        
+        .filter-select option {
+            background: #2a2a2a;
+            color: #ffffff;
+        }
+        
+        .toolbar-right {
+            display: flex;
+            gap: 8px;
+        }
+        
+        /* Table */
+        .table-container {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .table-wrapper {
+            overflow-x: auto;
+            max-height: calc(100vh - 340px);
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        
+        thead {
+            background: rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        th {
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #9ca3af;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+        
+        th:hover {
+            color: #ffffff;
+        }
+        
+        th.sorted {
+            color: #3b82f6;
+        }
+        
+        th .sort-icon {
+            margin-left: 4px;
+            opacity: 0.5;
+        }
+        
+        th.sorted .sort-icon {
+            opacity: 1;
+        }
+        
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #e5e7eb;
+            vertical-align: middle;
+        }
+        
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .org-name {
+            font-weight: 500;
+            color: #ffffff;
+            max-width: 250px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .category-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        
+        .category-badge.education { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+        .category-badge.health { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
+        .category-badge.human-services { background: rgba(249, 115, 22, 0.15); color: #fb923c; }
+        .category-badge.community-building { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+        .category-badge.systems-building { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
+        .category-badge.capacity { background: rgba(20, 184, 166, 0.15); color: #2dd4bf; }
+        
+        .amount {
+            font-weight: 600;
+            color: #4ade80;
+            white-space: nowrap;
+        }
+        
+        .service-areas-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        
+        .actions-cell {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: #9ca3af;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+        
+        .action-btn.edit:hover {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        
+        .action-btn.delete:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+        }
+        
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background: #1f1f1f;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.95);
+            transition: transform 0.2s ease;
+        }
+        
+        .modal-overlay.show .modal {
+            transform: scale(1);
+        }
+        
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            color: #9ca3af;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+        
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        
+        /* Form */
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .form-row.single {
+            grid-template-columns: 1fr;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .form-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #d1d5db;
+        }
+        
+        .form-label .required {
+            color: #ef4444;
+            margin-left: 2px;
+        }
+        
+        .form-input,
+        .form-select,
+        .form-textarea {
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: #3b82f6;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: #6b7280;
+        }
+        
+        .form-select option {
+            background: #2a2a2a;
+            color: #ffffff;
+        }
+        
+        .form-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        .form-input.error,
+        .form-select.error {
+            border-color: #ef4444;
+        }
+        
+        .form-error {
+            font-size: 12px;
+            color: #ef4444;
+        }
+        
+        .form-section {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-section-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        /* Grants List */
+        .grants-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .grant-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 16px;
+        }
+        
+        .grant-item-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .grant-item-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: #9ca3af;
+        }
+        
+        .grant-remove {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+        
+        .grant-remove:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+        }
+        
+        .grant-fields {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        
+        .add-grant-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px dashed rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            color: #60a5fa;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .add-grant-btn:hover {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+        
+        /* Service Areas Multi-select */
+        .service-areas-container {
+            max-height: 200px;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 8px;
+        }
+        
+        .service-area-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+        
+        .service-area-checkbox:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .service-area-checkbox input {
+            width: 16px;
+            height: 16px;
+            accent-color: #3b82f6;
+        }
+        
+        .service-area-checkbox label {
+            font-size: 13px;
+            color: #d1d5db;
+            cursor: pointer;
+        }
+        
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .toast {
+            background: #2a2a2a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 300px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .toast.success {
+            border-left: 3px solid #4ade80;
+        }
+        
+        .toast.error {
+            border-left: 3px solid #ef4444;
+        }
+        
+        .toast.info {
+            border-left: 3px solid #3b82f6;
+        }
+        
+        .toast-icon {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .toast.success .toast-icon { color: #4ade80; }
+        .toast.error .toast-icon { color: #ef4444; }
+        .toast.info .toast-icon { color: #3b82f6; }
+        
+        .toast-message {
+            flex: 1;
+            font-size: 14px;
+            color: #e5e7eb;
+        }
+        
+        .toast-close {
+            background: transparent;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            padding: 4px;
+        }
+        
+        .toast-close:hover {
+            color: #ffffff;
+        }
+        
+        /* History Panel */
+        .history-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: #1f1f1f;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 500;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .history-panel.show {
+            right: 0;
+        }
+        
+        .history-panel-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .history-panel-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .history-panel-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+        
+        .history-item {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .history-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .history-item.current {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        .history-item-action {
+            font-size: 13px;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+        
+        .history-item-action.add { color: #4ade80; }
+        .history-item-action.edit { color: #60a5fa; }
+        .history-item-action.delete { color: #f87171; }
+        
+        .history-item-details {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        
+        .history-item-time {
+            font-size: 11px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+        
+        .history-empty {
+            text-align: center;
+            color: #6b7280;
+            padding: 40px 20px;
+        }
+        
+        /* Publish Modal */
+        .publish-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .publish-info {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 13px;
+            color: #93c5fd;
+        }
+        
+        .publish-info strong {
+            color: #60a5fa;
+        }
+        
+        .code-container {
+            position: relative;
+        }
+        
+        .code-output {
+            background: #0d0d0d;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 16px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 12px;
+            color: #e5e7eb;
+            max-height: 300px;
+            overflow: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .code-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        
+        .btn-copy, .btn-download {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-copy:hover, .btn-download:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-download {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-color: transparent;
+        }
+        
+        .btn-download:hover {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+        }
+        
+        /* Versions Panel */
+        .versions-panel {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 450px;
+            height: 100vh;
+            background: #1f1f1f;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 500;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .versions-panel.show {
+            right: 0;
+        }
+        
+        .versions-panel-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .versions-panel-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .versions-panel-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+        
+        .save-version-form {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .save-version-form input {
+            flex: 1;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .save-version-form input:focus {
+            border-color: #3b82f6;
+        }
+        
+        .save-version-form input::placeholder {
+            color: #6b7280;
+        }
+        
+        .save-version-form button {
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border: none;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        
+        .version-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .version-item-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .version-item-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        
+        .version-item-actions {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .version-action-btn {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            color: #9ca3af;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .version-action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+        
+        .version-action-btn.restore:hover {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        
+        .version-action-btn.delete:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        
+        .version-item-meta {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+        
+        .version-item-stats {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        
+        .version-item.current {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.08);
+        }
+        
+        .version-item.current .version-item-name::after {
+            content: 'CURRENT';
+            margin-left: 8px;
+            font-size: 10px;
+            padding: 2px 6px;
+            background: #3b82f6;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .versions-empty {
+            text-align: center;
+            color: #6b7280;
+            padding: 40px 20px;
+        }
+        
+        /* Confirm Dialog */
+        .confirm-dialog {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .confirm-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            color: #f87171;
+        }
+        
+        .confirm-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .confirm-message {
+            color: #9ca3af;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        
+        .confirm-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        
+        .btn-cancel {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-danger {
+            padding: 10px 20px;
+            background: #ef4444;
+            border: none;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7280;
+        }
+        
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        
+        .empty-state h3 {
+            font-size: 18px;
+            color: #9ca3af;
+            margin-bottom: 8px;
+        }
+        
+        .empty-state p {
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .grant-fields {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .stats-bar {
+                grid-template-columns: 1fr;
+            }
+            
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .toolbar-left {
+                flex-direction: column;
+            }
+            
+            .search-box {
+                max-width: none;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .grant-fields {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="24" height="24" fill="white" viewBox="0 0 24 24">
+                        <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
+                    </svg>
+                </div>
+                <span class="logo-text">Knight Impact Partners</span>
+            </div>
+            <span class="header-title">Admin Dashboard</span>
+        </div>
+        <div class="header-right">
+            <div class="history-actions">
+                <button class="history-btn" id="undoBtn" title="Undo (Ctrl+Z)" disabled>
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
+                    </svg>
+                </button>
+                <button class="history-btn" id="redoBtn" title="Redo (Ctrl+Shift+Z)" disabled>
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10h-10a8 8 0 00-8 8v2M21 10l-6 6m6-6l-6-6"/>
+                    </svg>
+                </button>
+            </div>
+            <button class="header-btn" id="historyBtn">
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                History
+            </button>
+            <button class="header-btn" id="resetBtn" title="Reset to original knight_data.js">
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                </svg>
+                Reset
+            </button>
+            <button class="header-btn" id="importBtn">
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                </svg>
+                Import
+            </button>
+            <button class="header-btn" id="exportBtn">
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                </svg>
+                Export
+            </button>
+            <button class="header-btn" id="versionsBtn">
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+                </svg>
+                Versions
+            </button>
+            <button class="header-btn primary" id="publishBtn">
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                </svg>
+                Publish
+            </button>
+            <a href="index.html" class="header-btn">
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+                </svg>
+                View Map
+            </a>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-label">Total Organizations</div>
+                <div class="stat-value" id="totalOrgs">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Funding</div>
+                <div class="stat-value currency" id="totalFunding">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Grants</div>
+                <div class="stat-value" id="totalGrants">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Last Modified</div>
+                <div class="stat-value" id="lastModified" style="font-size: 16px;">Never</div>
+                <div class="stat-sub" id="lastModifiedSub"></div>
+            </div>
+        </div>
+        
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <div class="search-box">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    <input type="text" id="searchInput" placeholder="Search organizations...">
+                </div>
+                <select class="filter-select" id="categoryFilter">
+                    <option value="">All Categories</option>
+                    <option value="Human Services">Human Services</option>
+                    <option value="Community Building">Community Building</option>
+                    <option value="Systems Building">Systems Building</option>
+                    <option value="Education">Education</option>
+                    <option value="Health">Health</option>
+                    <option value="Capacity & Leadership">Capacity & Leadership</option>
+                    <option value="Direct Program Services">Direct Program Services</option>
+                    <option value="Capital">Capital</option>
+                    <option value="Growth Grant">Growth Grant</option>
+                </select>
+            </div>
+            <div class="toolbar-right">
+                <button class="header-btn primary" id="addOrgBtn">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Add Organization
+                </button>
+            </div>
+        </div>
+        
+        <!-- Table -->
+        <div class="table-container">
+            <div class="table-wrapper">
+                <table id="orgsTable">
+                    <thead>
+                        <tr>
+                            <th data-sort="name">Name <span class="sort-icon">↕</span></th>
+                            <th data-sort="category">Category <span class="sort-icon">↕</span></th>
+                            <th data-sort="city">City <span class="sort-icon">↕</span></th>
+                            <th data-sort="grant_amount_awarded">Funding <span class="sort-icon">↕</span></th>
+                            <th data-sort="service_areas_type">Service Type <span class="sort-icon">↕</span></th>
+                            <th data-sort="grant_count">Grants <span class="sort-icon">↕</span></th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orgsTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Add/Edit Modal -->
+    <div class="modal-overlay" id="orgModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Add Organization</h2>
+                <button class="modal-close" id="modalClose">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="orgForm">
+                    <input type="hidden" id="orgId">
+                    
+                    <!-- Basic Info -->
+                    <div class="form-row single">
+                        <div class="form-group">
+                            <label class="form-label">Organization Name <span class="required">*</span></label>
+                            <input type="text" class="form-input" id="orgName" required placeholder="Enter organization name">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Address</label>
+                            <input type="text" class="form-input" id="orgAddress" placeholder="Street address">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">City <span class="required">*</span></label>
+                            <input type="text" class="form-input" id="orgCity" value="Chicago" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">State <span class="required">*</span></label>
+                            <input type="text" class="form-input" id="orgState" value="IL" required maxlength="2">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">ZIP Code</label>
+                            <input type="text" class="form-input" id="orgZip" placeholder="60601" maxlength="10">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Category <span class="required">*</span></label>
+                            <select class="form-select" id="orgCategory" required>
+                                <option value="">Select category</option>
+                                <option value="Human Services">Human Services</option>
+                                <option value="Community Building">Community Building</option>
+                                <option value="Systems Building">Systems Building</option>
+                                <option value="Education">Education</option>
+                                <option value="Health">Health</option>
+                                <option value="Capacity & Leadership">Capacity & Leadership</option>
+                                <option value="Direct Program Services">Direct Program Services</option>
+                                <option value="Capital">Capital</option>
+                                <option value="Growth Grant">Growth Grant</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Service Areas Type <span class="required">*</span></label>
+                            <select class="form-select" id="orgServiceType" required>
+                                <option value="">Select type</option>
+                                <option value="City Wide">City Wide</option>
+                                <option value="State Wide">State Wide</option>
+                                <option value="Specific">Specific Areas</option>
+                                <option value="Evanston">Evanston</option>
+                                <option value="Evanston Mixed">Evanston Mixed</option>
+                                <option value="South West Sides">South West Sides</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Latitude</label>
+                            <input type="number" step="any" class="form-input" id="orgLat" placeholder="41.8781">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Longitude</label>
+                            <input type="number" step="any" class="form-input" id="orgLng" placeholder="-87.6298">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row single">
+                        <div class="form-group">
+                            <label class="form-label">Primary Neighborhood</label>
+                            <input type="text" class="form-input" id="orgPrimaryNeighborhood" placeholder="e.g., Chicago Lawn, bordering Englewood">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row single">
+                        <div class="form-group">
+                            <label class="form-label">Location Note</label>
+                            <textarea class="form-textarea" id="orgLocationNote" placeholder="Additional notes about this location"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Areas (shown when Specific is selected) -->
+                    <div class="form-section" id="serviceAreasSection" style="display: none;">
+                        <div class="form-section-title">Service Areas</div>
+                        <div class="service-areas-container" id="serviceAreasContainer">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <!-- Grants -->
+                    <div class="form-section">
+                        <div class="form-section-title">
+                            Grants
+                            <button type="button" class="add-grant-btn" id="addGrantBtn">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                </svg>
+                                Add Grant
+                            </button>
+                        </div>
+                        <div class="grants-list" id="grantsList">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" id="modalCancel">Cancel</button>
+                <button type="button" class="header-btn primary" id="modalSave">Save Organization</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal" style="max-width: 400px;">
+            <div class="modal-body">
+                <div class="confirm-dialog">
+                    <svg class="confirm-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                    <h3 class="confirm-title">Delete Organization?</h3>
+                    <p class="confirm-message" id="deleteMessage">Are you sure you want to delete this organization? This action can be undone.</p>
+                    <div class="confirm-actions">
+                        <button class="btn-cancel" id="deleteCancelBtn">Cancel</button>
+                        <button class="btn-danger" id="deleteConfirmBtn">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- History Panel -->
+    <div class="history-panel" id="historyPanel">
+        <div class="history-panel-header">
+            <h3 class="history-panel-title">Change History</h3>
+            <button class="modal-close" id="historyClose">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <div class="history-panel-body" id="historyList">
+            <div class="history-empty">
+                <p>No changes yet</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Versions Panel -->
+    <div class="versions-panel" id="versionsPanel">
+        <div class="versions-panel-header">
+            <h3 class="versions-panel-title">Saved Versions</h3>
+            <button class="modal-close" id="versionsClose">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <div class="versions-panel-body">
+            <div class="save-version-form">
+                <input type="text" id="versionNameInput" placeholder="Version name (e.g., v1.0, Feb Update)">
+                <button id="saveVersionBtn">Save Version</button>
+            </div>
+            <div id="versionsList">
+                <div class="versions-empty">
+                    <p>No saved versions yet</p>
+                    <p style="margin-top: 8px; font-size: 12px;">Save a version to create a restore point</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Reset Confirmation Modal -->
+    <div class="modal-overlay" id="resetModal">
+        <div class="modal" style="max-width: 450px;">
+            <div class="modal-body">
+                <div class="confirm-dialog">
+                    <svg class="confirm-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #f59e0b;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                    <h3 class="confirm-title">Reset to Original Data?</h3>
+                    <p class="confirm-message">This will discard all changes and restore data from the original knight_data.js file. Your saved versions will be preserved.</p>
+                    <div class="confirm-actions">
+                        <button class="btn-cancel" id="resetCancelBtn">Cancel</button>
+                        <button class="btn-danger" id="resetConfirmBtn" style="background: #f59e0b;">Reset Data</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Publish Modal -->
+    <div class="modal-overlay" id="publishModal">
+        <div class="modal" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2 class="modal-title">Publish Changes</h2>
+                <button class="modal-close" id="publishClose">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="publish-content">
+                    <div class="publish-info">
+                        <strong>How to deploy your changes:</strong><br><br>
+                        1. Click "Download knight_data.js" below<br>
+                        2. Replace the existing <code>knight_data.js</code> file in your project<br>
+                        3. Deploy your updated website<br><br>
+                        The map will automatically use the new data when visitors load the page.
+                    </div>
+                    
+                    <div class="code-container">
+                        <div class="code-output" id="publishCode">
+                            // Generated code will appear here
+                        </div>
+                        <div class="code-actions">
+                            <button class="btn-copy" id="copyCodeBtn">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                </svg>
+                                Copy to Clipboard
+                            </button>
+                            <button class="btn-download" id="downloadCodeBtn">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                </svg>
+                                Download knight_data.js
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+    
+    <!-- Hidden file input for import -->
+    <input type="file" id="importFile" accept=".json" style="display: none;">
+
+    <script>
+        // ============================================
+        // State Management
+        // ============================================
+        
+        const STORAGE_KEY = 'knight_organizations';
+        const HISTORY_KEY = 'knight_history';
+        const MAX_HISTORY = 50;
+        
+        let state = {
+            organizations: [],
+            history: {
+                past: [],
+                present: null,
+                future: []
+            },
+            sortColumn: 'name',
+            sortDirection: 'asc',
+            searchTerm: '',
+            categoryFilter: ''
+        };
+        
+        // All Chicago neighborhoods for service areas selection
+        const ALL_NEIGHBORHOODS = Object.keys(CHICAGO_NEIGHBORHOODS || {}).sort();
+        
+        // ============================================
+        // Data Management
+        // ============================================
+        
+        function generateId(name) {
+            return name.toLowerCase()
+                .replace(/[^a-z0-9\s]/g, '')
+                .replace(/\s+/g, '_')
+                .substring(0, 50);
+        }
+        
+        function loadData() {
+            // Try to load from localStorage first
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    state.organizations = JSON.parse(stored);
+                } catch (e) {
+                    console.error('Error parsing stored data:', e);
+                    loadFromSource();
+                }
+            } else {
+                loadFromSource();
+            }
+            
+            // Load history
+            const storedHistory = localStorage.getItem(HISTORY_KEY);
+            if (storedHistory) {
+                try {
+                    state.history = JSON.parse(storedHistory);
+                } catch (e) {
+                    console.error('Error parsing history:', e);
+                }
+            }
+            
+            updateUI();
+        }
+        
+        function loadFromSource() {
+            // Load from knight_data.js
+            if (typeof KNIGHT_ORGANIZATIONS_DATA !== 'undefined') {
+                state.organizations = JSON.parse(JSON.stringify(KNIGHT_ORGANIZATIONS_DATA));
+                saveData();
+            }
+        }
+        
+        function openResetModal() {
+            document.getElementById('resetModal').classList.add('show');
+        }
+        
+        function closeResetModal() {
+            document.getElementById('resetModal').classList.remove('show');
+        }
+        
+        function resetToOriginal() {
+            if (typeof KNIGHT_ORGANIZATIONS_DATA === 'undefined') {
+                showToast('Original data not available', 'error');
+                return;
+            }
+            
+            const previousState = JSON.parse(JSON.stringify(state.organizations));
+            state.organizations = JSON.parse(JSON.stringify(KNIGHT_ORGANIZATIONS_DATA));
+            
+            // Clear history
+            state.history = { past: [], present: null, future: [] };
+            
+            saveData();
+            saveHistory();
+            pushToHistory('Reset to original data', 'System', previousState);
+            updateUI();
+            closeResetModal();
+            showToast('Data reset to original knight_data.js', 'success');
+        }
+        
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state.organizations));
+        }
+        
+        function saveHistory() {
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(state.history));
+        }
+        
+        function pushToHistory(action, orgName, previousState) {
+            // Save current state to past
+            if (state.history.present !== null) {
+                state.history.past.push(state.history.present);
+                // Limit history size
+                if (state.history.past.length > MAX_HISTORY) {
+                    state.history.past.shift();
+                }
+            }
+            
+            // Set new present
+            state.history.present = {
+                action,
+                orgName,
+                timestamp: new Date().toISOString(),
+                data: JSON.parse(JSON.stringify(state.organizations)),
+                previousData: previousState
+            };
+            
+            // Clear future
+            state.history.future = [];
+            
+            saveHistory();
+            updateHistoryUI();
+        }
+        
+        function undo() {
+            if (state.history.past.length === 0) return;
+            
+            // Move present to future
+            state.history.future.unshift(state.history.present);
+            
+            // Get previous state
+            state.history.present = state.history.past.pop();
+            state.organizations = JSON.parse(JSON.stringify(state.history.present.data));
+            
+            saveData();
+            saveHistory();
+            updateUI();
+            showToast('Undone: ' + state.history.future[0].action, 'info');
+        }
+        
+        function redo() {
+            if (state.history.future.length === 0) return;
+            
+            // Move present to past
+            state.history.past.push(state.history.present);
+            
+            // Get next state
+            state.history.present = state.history.future.shift();
+            state.organizations = JSON.parse(JSON.stringify(state.history.present.data));
+            
+            saveData();
+            saveHistory();
+            updateUI();
+            showToast('Redone: ' + state.history.present.action, 'info');
+        }
+        
+        function restoreToPoint(index) {
+            // index is from past array
+            if (index < 0 || index >= state.history.past.length) return;
+            
+            // Save everything after this point to future
+            const newFuture = state.history.past.slice(index + 1);
+            newFuture.push(state.history.present);
+            state.history.future = [...newFuture, ...state.history.future];
+            
+            // Set the selected point as present
+            state.history.present = state.history.past[index];
+            state.history.past = state.history.past.slice(0, index);
+            
+            state.organizations = JSON.parse(JSON.stringify(state.history.present.data));
+            
+            saveData();
+            saveHistory();
+            updateUI();
+            showToast('Restored to: ' + state.history.present.action, 'info');
+        }
+        
+        // ============================================
+        // CRUD Operations
+        // ============================================
+        
+        function addOrganization(orgData) {
+            const previousState = JSON.parse(JSON.stringify(state.organizations));
+            
+            // Generate ID
+            orgData.id = generateId(orgData.name);
+            
+            // Ensure unique ID
+            let counter = 1;
+            let baseId = orgData.id;
+            while (state.organizations.some(o => o.id === orgData.id)) {
+                orgData.id = baseId + '_' + counter++;
+            }
+            
+            // Calculate derived fields
+            orgData.grant_count = orgData.grants ? orgData.grants.length : 0;
+            orgData.has_multiple_grants = orgData.grant_count > 1;
+            orgData.grant_amount_awarded = orgData.grants 
+                ? orgData.grants.reduce((sum, g) => sum + (parseFloat(g.amount_awarded) || 0), 0)
+                : 0;
+            orgData.service_areas_count = orgData.service_areas ? orgData.service_areas.length : 0;
+            orgData.city_category = orgData.city.toLowerCase();
+            
+            state.organizations.push(orgData);
+            saveData();
+            pushToHistory('Added ' + orgData.name, orgData.name, previousState);
+            updateUI();
+            showToast('Organization added successfully', 'success');
+        }
+        
+        function updateOrganization(id, orgData) {
+            const previousState = JSON.parse(JSON.stringify(state.organizations));
+            const index = state.organizations.findIndex(o => o.id === id);
+            
+            if (index === -1) {
+                showToast('Organization not found', 'error');
+                return;
+            }
+            
+            // Preserve the ID
+            orgData.id = id;
+            
+            // Calculate derived fields
+            orgData.grant_count = orgData.grants ? orgData.grants.length : 0;
+            orgData.has_multiple_grants = orgData.grant_count > 1;
+            orgData.grant_amount_awarded = orgData.grants 
+                ? orgData.grants.reduce((sum, g) => sum + (parseFloat(g.amount_awarded) || 0), 0)
+                : 0;
+            orgData.service_areas_count = orgData.service_areas ? orgData.service_areas.length : 0;
+            orgData.city_category = orgData.city.toLowerCase();
+            
+            state.organizations[index] = orgData;
+            saveData();
+            pushToHistory('Edited ' + orgData.name, orgData.name, previousState);
+            updateUI();
+            showToast('Organization updated successfully', 'success');
+        }
+        
+        function deleteOrganization(id) {
+            const previousState = JSON.parse(JSON.stringify(state.organizations));
+            const org = state.organizations.find(o => o.id === id);
+            
+            if (!org) {
+                showToast('Organization not found', 'error');
+                return;
+            }
+            
+            state.organizations = state.organizations.filter(o => o.id !== id);
+            saveData();
+            pushToHistory('Deleted ' + org.name, org.name, previousState);
+            updateUI();
+            showToast('Organization deleted', 'success');
+        }
+        
+        // ============================================
+        // UI Updates
+        // ============================================
+        
+        function updateUI() {
+            updateStats();
+            updateTable();
+            updateHistoryUI();
+            updateHistoryButtons();
+        }
+        
+        function updateStats() {
+            const totalOrgs = state.organizations.length;
+            const totalFunding = state.organizations.reduce((sum, o) => sum + (o.grant_amount_awarded || 0), 0);
+            const totalGrants = state.organizations.reduce((sum, o) => sum + (o.grant_count || 0), 0);
+            
+            document.getElementById('totalOrgs').textContent = totalOrgs.toLocaleString();
+            document.getElementById('totalFunding').textContent = totalFunding.toLocaleString();
+            document.getElementById('totalGrants').textContent = totalGrants.toLocaleString();
+            
+            // Last modified
+            if (state.history.present) {
+                const date = new Date(state.history.present.timestamp);
+                document.getElementById('lastModified').textContent = date.toLocaleDateString();
+                document.getElementById('lastModifiedSub').textContent = date.toLocaleTimeString();
+            }
+        }
+        
+        function updateTable() {
+            const tbody = document.getElementById('orgsTableBody');
+            
+            // Filter and sort
+            let filtered = state.organizations.filter(org => {
+                const matchesSearch = !state.searchTerm || 
+                    org.name.toLowerCase().includes(state.searchTerm.toLowerCase());
+                const matchesCategory = !state.categoryFilter || 
+                    (org.category && org.category.trim().toLowerCase() === state.categoryFilter.toLowerCase());
+                return matchesSearch && matchesCategory;
+            });
+            
+            // Sort
+            filtered.sort((a, b) => {
+                let aVal = a[state.sortColumn];
+                let bVal = b[state.sortColumn];
+                
+                if (typeof aVal === 'string') aVal = aVal.toLowerCase();
+                if (typeof bVal === 'string') bVal = bVal.toLowerCase();
+                
+                if (aVal < bVal) return state.sortDirection === 'asc' ? -1 : 1;
+                if (aVal > bVal) return state.sortDirection === 'asc' ? 1 : -1;
+                return 0;
+            });
+            
+            if (filtered.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7">
+                            <div class="empty-state">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                </svg>
+                                <h3>No organizations found</h3>
+                                <p>Try adjusting your search or filters</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tbody.innerHTML = filtered.map(org => {
+                const categoryClass = getCategoryClass(org.category);
+                return `
+                    <tr data-id="${org.id}">
+                        <td><span class="org-name" title="${org.name}">${org.name}</span></td>
+                        <td><span class="category-badge ${categoryClass}">${org.category || 'N/A'}</span></td>
+                        <td>${org.city || 'N/A'}</td>
+                        <td><span class="amount">$${(org.grant_amount_awarded || 0).toLocaleString()}</span></td>
+                        <td><span class="service-areas-badge">${org.service_areas_type || 'N/A'}</span></td>
+                        <td>${org.grant_count || 0}</td>
+                        <td>
+                            <div class="actions-cell">
+                                <button class="action-btn edit" title="Edit" onclick="editOrg('${org.id}')">
+                                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                    </svg>
+                                </button>
+                                <button class="action-btn delete" title="Delete" onclick="confirmDelete('${org.id}')">
+                                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+            
+            // Update sort indicators
+            document.querySelectorAll('th[data-sort]').forEach(th => {
+                th.classList.remove('sorted');
+                const icon = th.querySelector('.sort-icon');
+                icon.textContent = '↕';
+            });
+            
+            const sortedTh = document.querySelector(`th[data-sort="${state.sortColumn}"]`);
+            if (sortedTh) {
+                sortedTh.classList.add('sorted');
+                sortedTh.querySelector('.sort-icon').textContent = state.sortDirection === 'asc' ? '↑' : '↓';
+            }
+        }
+        
+        function getCategoryClass(category) {
+            if (!category) return '';
+            const cat = category.toLowerCase().trim();
+            if (cat.includes('education')) return 'education';
+            if (cat.includes('health')) return 'health';
+            if (cat.includes('human')) return 'human-services';
+            if (cat.includes('community')) return 'community-building';
+            if (cat.includes('systems')) return 'systems-building';
+            if (cat.includes('capacity')) return 'capacity';
+            return '';
+        }
+        
+        function updateHistoryUI() {
+            const historyList = document.getElementById('historyList');
+            
+            const allHistory = [...state.history.past];
+            if (state.history.present) {
+                allHistory.push(state.history.present);
+            }
+            
+            if (allHistory.length === 0) {
+                historyList.innerHTML = '<div class="history-empty"><p>No changes yet</p></div>';
+                return;
+            }
+            
+            historyList.innerHTML = allHistory.map((item, index) => {
+                const isCurrent = index === allHistory.length - 1;
+                const actionClass = item.action.toLowerCase().includes('added') ? 'add' :
+                                   item.action.toLowerCase().includes('edited') ? 'edit' : 'delete';
+                const date = new Date(item.timestamp);
+                
+                return `
+                    <div class="history-item ${isCurrent ? 'current' : ''}" onclick="restoreToPoint(${index})">
+                        <div class="history-item-action ${actionClass}">${item.action}</div>
+                        <div class="history-item-time">${date.toLocaleString()}</div>
+                    </div>
+                `;
+            }).reverse().join('');
+        }
+        
+        function updateHistoryButtons() {
+            document.getElementById('undoBtn').disabled = state.history.past.length === 0;
+            document.getElementById('redoBtn').disabled = state.history.future.length === 0;
+        }
+        
+        // ============================================
+        // Modal Management
+        // ============================================
+        
+        let currentEditId = null;
+        let deleteTargetId = null;
+        let grantCounter = 0;
+        
+        function openModal(editId = null) {
+            currentEditId = editId;
+            const modal = document.getElementById('orgModal');
+            const form = document.getElementById('orgForm');
+            const title = document.getElementById('modalTitle');
+            
+            // Reset form
+            form.reset();
+            document.getElementById('orgCity').value = 'Chicago';
+            document.getElementById('orgState').value = 'IL';
+            document.getElementById('grantsList').innerHTML = '';
+            grantCounter = 0;
+            
+            // Populate service areas checkboxes
+            populateServiceAreas();
+            
+            if (editId) {
+                title.textContent = 'Edit Organization';
+                const org = state.organizations.find(o => o.id === editId);
+                if (org) {
+                    document.getElementById('orgId').value = org.id;
+                    document.getElementById('orgName').value = org.name || '';
+                    document.getElementById('orgAddress').value = org.address || '';
+                    document.getElementById('orgCity').value = org.city || 'Chicago';
+                    document.getElementById('orgState').value = org.state || 'IL';
+                    document.getElementById('orgZip').value = org.zip_code || '';
+                    document.getElementById('orgCategory').value = org.category || '';
+                    document.getElementById('orgServiceType').value = org.service_areas_type || '';
+                    document.getElementById('orgLat').value = org.lat || '';
+                    document.getElementById('orgLng').value = org.lng || '';
+                    document.getElementById('orgPrimaryNeighborhood').value = org.primary_neighborhood || '';
+                    document.getElementById('orgLocationNote').value = org.location_note || '';
+                    
+                    // Check service areas
+                    if (org.service_areas) {
+                        org.service_areas.forEach(area => {
+                            const checkbox = document.querySelector(`#serviceAreasContainer input[value="${area}"]`);
+                            if (checkbox) checkbox.checked = true;
+                        });
+                    }
+                    
+                    // Add grants
+                    if (org.grants) {
+                        org.grants.forEach(grant => addGrantField(grant));
+                    }
+                    
+                    // Show/hide service areas
+                    toggleServiceAreas();
+                }
+            } else {
+                title.textContent = 'Add Organization';
+                addGrantField(); // Add one empty grant field
+            }
+            
+            modal.classList.add('show');
+        }
+        
+        function closeModal() {
+            document.getElementById('orgModal').classList.remove('show');
+            currentEditId = null;
+        }
+        
+        function populateServiceAreas() {
+            const container = document.getElementById('serviceAreasContainer');
+            container.innerHTML = ALL_NEIGHBORHOODS.map(area => {
+                const displayName = area.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                return `
+                    <div class="service-area-checkbox">
+                        <input type="checkbox" id="area_${area}" value="${area}">
+                        <label for="area_${area}">${displayName}</label>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function toggleServiceAreas() {
+            const serviceType = document.getElementById('orgServiceType').value;
+            const section = document.getElementById('serviceAreasSection');
+            section.style.display = serviceType === 'Specific' ? 'block' : 'none';
+        }
+        
+        function addGrantField(data = {}) {
+            const grantsList = document.getElementById('grantsList');
+            const grantId = grantCounter++;
+            
+            const grantHtml = `
+                <div class="grant-item" id="grant_${grantId}">
+                    <div class="grant-item-header">
+                        <span class="grant-item-title">Grant #${grantId + 1}</span>
+                        <button type="button" class="grant-remove" onclick="removeGrant(${grantId})">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="grant-fields">
+                        <div class="form-group">
+                            <label class="form-label">Amount</label>
+                            <input type="number" step="0.01" class="form-input grant-amount" value="${data.amount_awarded || ''}" placeholder="100000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Category</label>
+                            <select class="form-select grant-category">
+                                <option value="">Select</option>
+                                <option value="Growth Grant" ${data.category === 'Growth Grant' ? 'selected' : ''}>Growth Grant</option>
+                                <option value="Planning Grant" ${data.category === 'Planning Grant' ? 'selected' : ''}>Planning Grant</option>
+                                <option value="Implementation Grant" ${data.category === 'Implementation Grant' ? 'selected' : ''}>Implementation Grant</option>
+                                <option value="General Support" ${data.category === 'General Support' ? 'selected' : ''}>General Support</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Quarter</label>
+                            <select class="form-select grant-quarter">
+                                <option value="">Select</option>
+                                <option value="Q1" ${data.quarter === 'Q1' ? 'selected' : ''}>Q1</option>
+                                <option value="Q2" ${data.quarter === 'Q2' ? 'selected' : ''}>Q2</option>
+                                <option value="Q3" ${data.quarter === 'Q3' ? 'selected' : ''}>Q3</option>
+                                <option value="Q4" ${data.quarter === 'Q4' ? 'selected' : ''}>Q4</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Year</label>
+                            <input type="number" class="form-input grant-year" value="${data.year || new Date().getFullYear()}" min="2000" max="2100">
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            grantsList.insertAdjacentHTML('beforeend', grantHtml);
+        }
+        
+        function removeGrant(grantId) {
+            const grantEl = document.getElementById(`grant_${grantId}`);
+            if (grantEl) {
+                grantEl.remove();
+            }
+        }
+        
+        function saveOrganization() {
+            const form = document.getElementById('orgForm');
+            
+            // Validate required fields
+            const name = document.getElementById('orgName').value.trim();
+            const city = document.getElementById('orgCity').value.trim();
+            const state = document.getElementById('orgState').value.trim();
+            const category = document.getElementById('orgCategory').value;
+            const serviceType = document.getElementById('orgServiceType').value;
+            
+            if (!name || !city || !state || !category || !serviceType) {
+                showToast('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            // Collect service areas
+            const serviceAreas = [];
+            document.querySelectorAll('#serviceAreasContainer input:checked').forEach(cb => {
+                serviceAreas.push(cb.value);
+            });
+            
+            // Collect grants
+            const grants = [];
+            document.querySelectorAll('.grant-item').forEach((item, index) => {
+                const amount = item.querySelector('.grant-amount').value;
+                const cat = item.querySelector('.grant-category').value;
+                const quarter = item.querySelector('.grant-quarter').value;
+                const year = item.querySelector('.grant-year').value;
+                
+                if (amount) {
+                    grants.push({
+                        number: index + 1,
+                        amount_awarded: parseFloat(amount) || 0,
+                        category: cat || 'Growth Grant',
+                        quarter: quarter || 'Q1',
+                        year: parseInt(year) || new Date().getFullYear()
+                    });
+                }
+            });
+            
+            const orgData = {
+                name: name,
+                address: document.getElementById('orgAddress').value.trim() || null,
+                city: city,
+                state: state,
+                zip_code: document.getElementById('orgZip').value.trim() || null,
+                category: category,
+                lat: parseFloat(document.getElementById('orgLat').value) || null,
+                lng: parseFloat(document.getElementById('orgLng').value) || null,
+                service_areas: serviceAreas,
+                service_areas_type: serviceType,
+                primary_neighborhood: document.getElementById('orgPrimaryNeighborhood').value.trim() || null,
+                grants: grants,
+                location_note: document.getElementById('orgLocationNote').value.trim() || null
+            };
+            
+            if (currentEditId) {
+                updateOrganization(currentEditId, orgData);
+            } else {
+                addOrganization(orgData);
+            }
+            
+            closeModal();
+        }
+        
+        function editOrg(id) {
+            openModal(id);
+        }
+        
+        function confirmDelete(id) {
+            deleteTargetId = id;
+            const org = state.organizations.find(o => o.id === id);
+            document.getElementById('deleteMessage').textContent = 
+                `Are you sure you want to delete "${org?.name || 'this organization'}"? This action can be undone.`;
+            document.getElementById('deleteModal').classList.add('show');
+        }
+        
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('show');
+            deleteTargetId = null;
+        }
+        
+        function executeDelete() {
+            if (deleteTargetId) {
+                deleteOrganization(deleteTargetId);
+                closeDeleteModal();
+            }
+        }
+        
+        // ============================================
+        // Export/Import
+        // ============================================
+        
+        function exportData() {
+            const data = {
+                version: '1.0',
+                exportDate: new Date().toISOString(),
+                organizations: state.organizations
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `knight_organizations_backup_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast('Data exported successfully', 'success');
+        }
+        
+        function importData() {
+            document.getElementById('importFile').click();
+        }
+        
+        function handleImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    if (data.organizations && Array.isArray(data.organizations)) {
+                        const previousState = JSON.parse(JSON.stringify(state.organizations));
+                        state.organizations = data.organizations;
+                        saveData();
+                        pushToHistory('Imported ' + data.organizations.length + ' organizations', 'Backup', previousState);
+                        updateUI();
+                        showToast('Data imported successfully', 'success');
+                    } else {
+                        showToast('Invalid backup file format', 'error');
+                    }
+                } catch (err) {
+                    showToast('Error reading file: ' + err.message, 'error');
+                }
+            };
+            reader.readAsText(file);
+            
+            // Reset file input
+            event.target.value = '';
+        }
+        
+        // ============================================
+        // Versions Management
+        // ============================================
+        
+        const VERSIONS_KEY = 'knight_versions';
+        
+        function loadVersions() {
+            const stored = localStorage.getItem(VERSIONS_KEY);
+            if (stored) {
+                try {
+                    return JSON.parse(stored);
+                } catch (e) {
+                    return [];
+                }
+            }
+            return [];
+        }
+        
+        function saveVersions(versions) {
+            localStorage.setItem(VERSIONS_KEY, JSON.stringify(versions));
+        }
+        
+        function saveVersion(name) {
+            if (!name.trim()) {
+                showToast('Please enter a version name', 'error');
+                return;
+            }
+            
+            const versions = loadVersions();
+            const version = {
+                id: Date.now().toString(),
+                name: name.trim(),
+                timestamp: new Date().toISOString(),
+                orgCount: state.organizations.length,
+                totalFunding: state.organizations.reduce((sum, o) => sum + (o.grant_amount_awarded || 0), 0),
+                data: JSON.parse(JSON.stringify(state.organizations))
+            };
+            
+            versions.unshift(version);
+            
+            // Limit to 20 versions
+            if (versions.length > 20) {
+                versions.pop();
+            }
+            
+            saveVersions(versions);
+            updateVersionsUI();
+            showToast(`Version "${name}" saved`, 'success');
+            document.getElementById('versionNameInput').value = '';
+        }
+        
+        function restoreVersion(versionId) {
+            const versions = loadVersions();
+            const version = versions.find(v => v.id === versionId);
+            
+            if (!version) {
+                showToast('Version not found', 'error');
+                return;
+            }
+            
+            const previousState = JSON.parse(JSON.stringify(state.organizations));
+            state.organizations = JSON.parse(JSON.stringify(version.data));
+            saveData();
+            pushToHistory('Restored version: ' + version.name, version.name, previousState);
+            updateUI();
+            showToast(`Restored to "${version.name}"`, 'success');
+        }
+        
+        function deleteVersion(versionId) {
+            let versions = loadVersions();
+            const version = versions.find(v => v.id === versionId);
+            versions = versions.filter(v => v.id !== versionId);
+            saveVersions(versions);
+            updateVersionsUI();
+            showToast(`Version "${version?.name || 'Unknown'}" deleted`, 'info');
+        }
+        
+        function updateVersionsUI() {
+            const versionsList = document.getElementById('versionsList');
+            const versions = loadVersions();
+            
+            if (versions.length === 0) {
+                versionsList.innerHTML = `
+                    <div class="versions-empty">
+                        <p>No saved versions yet</p>
+                        <p style="margin-top: 8px; font-size: 12px;">Save a version to create a restore point</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            versionsList.innerHTML = versions.map((version, index) => {
+                const date = new Date(version.timestamp);
+                const isCurrent = index === 0 && JSON.stringify(state.organizations) === JSON.stringify(version.data);
+                
+                return `
+                    <div class="version-item ${isCurrent ? 'current' : ''}">
+                        <div class="version-item-header">
+                            <span class="version-item-name">${version.name}</span>
+                            <div class="version-item-actions">
+                                <button class="version-action-btn restore" title="Restore this version" onclick="restoreVersion('${version.id}')">
+                                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                    </svg>
+                                </button>
+                                <button class="version-action-btn delete" title="Delete this version" onclick="deleteVersion('${version.id}')">
+                                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="version-item-meta">${date.toLocaleDateString()} at ${date.toLocaleTimeString()}</div>
+                        <div class="version-item-stats">${version.orgCount} organizations • $${version.totalFunding.toLocaleString()} total funding</div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // ============================================
+        // Publish Functionality
+        // ============================================
+        
+        function generateKnightDataJS() {
+            const totalFunding = state.organizations.reduce((sum, o) => sum + (o.grant_amount_awarded || 0), 0);
+            const totalGrants = state.organizations.reduce((sum, o) => sum + (o.grant_count || 0), 0);
+            
+            const header = `// Knight Impact Partners Organization Data
+// Generated from: Admin Dashboard
+// Date: ${new Date().toLocaleDateString()}
+// Total Organizations: ${state.organizations.length}
+// Total Grants: ${totalGrants}
+// Total Funding: $${totalFunding.toLocaleString()}
+
+const KNIGHT_ORGANIZATIONS_DATA = `;
+            
+            const jsonData = JSON.stringify(state.organizations, null, 2);
+            
+            return header + jsonData + ';\n';
+        }
+        
+        function openPublishModal() {
+            const code = generateKnightDataJS();
+            document.getElementById('publishCode').textContent = code;
+            document.getElementById('publishModal').classList.add('show');
+        }
+        
+        function closePublishModal() {
+            document.getElementById('publishModal').classList.remove('show');
+        }
+        
+        function copyCode() {
+            const code = generateKnightDataJS();
+            navigator.clipboard.writeText(code).then(() => {
+                showToast('Code copied to clipboard!', 'success');
+            }).catch(() => {
+                showToast('Failed to copy. Please select and copy manually.', 'error');
+            });
+        }
+        
+        function downloadKnightDataJS() {
+            const code = generateKnightDataJS();
+            const blob = new Blob([code], { type: 'application/javascript' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'knight_data.js';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('knight_data.js downloaded!', 'success');
+        }
+        
+        // ============================================
+        // Toast Notifications
+        // ============================================
+        
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icons = {
+                success: '<svg class="toast-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>',
+                error: '<svg class="toast-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>',
+                info: '<svg class="toast-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
+            };
+            
+            toast.innerHTML = `
+                ${icons[type] || icons.info}
+                <span class="toast-message">${message}</span>
+                <button class="toast-close" onclick="this.parentElement.remove()">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Auto-remove after 4 seconds
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+        
+        // ============================================
+        // Event Listeners
+        // ============================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            
+            // Search
+            document.getElementById('searchInput').addEventListener('input', function() {
+                state.searchTerm = this.value;
+                updateTable();
+            });
+            
+            // Category filter
+            document.getElementById('categoryFilter').addEventListener('change', function() {
+                state.categoryFilter = this.value;
+                updateTable();
+            });
+            
+            // Sort
+            document.querySelectorAll('th[data-sort]').forEach(th => {
+                th.addEventListener('click', function() {
+                    const column = this.dataset.sort;
+                    if (state.sortColumn === column) {
+                        state.sortDirection = state.sortDirection === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        state.sortColumn = column;
+                        state.sortDirection = 'asc';
+                    }
+                    updateTable();
+                });
+            });
+            
+            // Add Organization button
+            document.getElementById('addOrgBtn').addEventListener('click', () => openModal());
+            
+            // Modal close buttons
+            document.getElementById('modalClose').addEventListener('click', closeModal);
+            document.getElementById('modalCancel').addEventListener('click', closeModal);
+            document.getElementById('modalSave').addEventListener('click', saveOrganization);
+            
+            // Delete modal
+            document.getElementById('deleteCancelBtn').addEventListener('click', closeDeleteModal);
+            document.getElementById('deleteConfirmBtn').addEventListener('click', executeDelete);
+            
+            // Service type change
+            document.getElementById('orgServiceType').addEventListener('change', toggleServiceAreas);
+            
+            // Add grant button
+            document.getElementById('addGrantBtn').addEventListener('click', () => addGrantField());
+            
+            // History panel
+            document.getElementById('historyBtn').addEventListener('click', function() {
+                document.getElementById('historyPanel').classList.toggle('show');
+            });
+            document.getElementById('historyClose').addEventListener('click', function() {
+                document.getElementById('historyPanel').classList.remove('show');
+            });
+            
+            // Undo/Redo
+            document.getElementById('undoBtn').addEventListener('click', undo);
+            document.getElementById('redoBtn').addEventListener('click', redo);
+            
+            // Export/Import/Reset
+            document.getElementById('exportBtn').addEventListener('click', exportData);
+            document.getElementById('importBtn').addEventListener('click', importData);
+            document.getElementById('importFile').addEventListener('change', handleImport);
+            document.getElementById('resetBtn').addEventListener('click', openResetModal);
+            document.getElementById('resetCancelBtn').addEventListener('click', closeResetModal);
+            document.getElementById('resetConfirmBtn').addEventListener('click', resetToOriginal);
+            document.getElementById('resetModal').addEventListener('click', function(e) {
+                if (e.target === this) closeResetModal();
+            });
+            
+            // Versions panel
+            document.getElementById('versionsBtn').addEventListener('click', function() {
+                document.getElementById('versionsPanel').classList.toggle('show');
+                updateVersionsUI();
+            });
+            document.getElementById('versionsClose').addEventListener('click', function() {
+                document.getElementById('versionsPanel').classList.remove('show');
+            });
+            document.getElementById('saveVersionBtn').addEventListener('click', function() {
+                saveVersion(document.getElementById('versionNameInput').value);
+            });
+            document.getElementById('versionNameInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    saveVersion(this.value);
+                }
+            });
+            
+            // Publish modal
+            document.getElementById('publishBtn').addEventListener('click', openPublishModal);
+            document.getElementById('publishClose').addEventListener('click', closePublishModal);
+            document.getElementById('copyCodeBtn').addEventListener('click', copyCode);
+            document.getElementById('downloadCodeBtn').addEventListener('click', downloadKnightDataJS);
+            document.getElementById('publishModal').addEventListener('click', function(e) {
+                if (e.target === this) closePublishModal();
+            });
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey || e.metaKey) {
+                    if (e.key === 'z' && !e.shiftKey) {
+                        e.preventDefault();
+                        undo();
+                    } else if ((e.key === 'z' && e.shiftKey) || e.key === 'y') {
+                        e.preventDefault();
+                        redo();
+                    }
+                }
+                
+                // Escape to close modals
+                if (e.key === 'Escape') {
+                    closeModal();
+                    closeDeleteModal();
+                    closePublishModal();
+                    closeResetModal();
+                    document.getElementById('historyPanel').classList.remove('show');
+                    document.getElementById('versionsPanel').classList.remove('show');
+                }
+            });
+            
+            // Close modal when clicking overlay
+            document.getElementById('orgModal').addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+            document.getElementById('deleteModal').addEventListener('click', function(e) {
+                if (e.target === this) closeDeleteModal();
+            });
+        });
+    </script>
+</body>
+</html>

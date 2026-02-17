@@ -4,6 +4,10 @@
     {
       "source": "/map",
       "destination": "/knight_simple_map.html"
+    },
+    {
+      "source": "/admin",
+      "destination": "/dashboard.html"
     }
   ],
   "headers": [
