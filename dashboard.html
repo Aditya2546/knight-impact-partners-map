@@ -2668,25 +2668,35 @@ const KNIGHT_ORGANIZATIONS_DATA = `;
             suggestionsContainer.classList.add('show');
             
             try {
-                // Use Nominatim API (OpenStreetMap) - free, no API key needed
-                // Bias results towards Chicago/Illinois area
+                // Use Photon API (Komoot) - free, no API key, no CORS issues
+                // Better alternative to Nominatim for browser use
                 const response = await fetch(
-                    `https://nominatim.openstreetmap.org/search?` + 
-                    `q=${encodeURIComponent(query)}&` +
-                    `format=json&` +
-                    `addressdetails=1&` +
-                    `limit=6&` +
-                    `countrycodes=us&` +
-                    `viewbox=-88.5,42.5,-87.0,41.4&` + // Chicago area bounding box
-                    `bounded=0`, // Don't strictly bound, just prefer this area
-                    {
-                        headers: {
-                            'User-Agent': 'KnightImpactDashboard/1.0'
-                        }
-                    }
+                    `https://photon.komoot.io/api/?` + 
+                    `q=${encodeURIComponent(query + ', Chicago, IL')}&` +
+                    `limit=8&` +
+                    `lat=41.8781&` + // Chicago center
+                    `lon=-87.6298&` +
+                    `lang=en`
                 );
                 
-                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error('API request failed');
+                }
+                
+                const result = await response.json();
+                const data = (result.features || []).map(f => ({
+                    lat: f.geometry.coordinates[1],
+                    lon: f.geometry.coordinates[0],
+                    display_name: formatPhotonDisplay(f.properties),
+                    address: {
+                        house_number: f.properties.housenumber,
+                        road: f.properties.street,
+                        city: f.properties.city || f.properties.locality,
+                        state: f.properties.state,
+                        postcode: f.properties.postcode,
+                        country: f.properties.country
+                    }
+                }));
                 
                 if (data.length === 0) {
                     suggestionsContainer.innerHTML = '<div class="address-no-results">No addresses found</div>';
@@ -2731,6 +2741,21 @@ const KNIGHT_ORGANIZATIONS_DATA = `;
                 console.error('Address search error:', error);
                 suggestionsContainer.innerHTML = '<div class="address-no-results">Search failed. Try again.</div>';
             }
+        }
+        
+        function formatPhotonDisplay(props) {
+            const parts = [];
+            if (props.housenumber && props.street) {
+                parts.push(`${props.housenumber} ${props.street}`);
+            } else if (props.street) {
+                parts.push(props.street);
+            } else if (props.name) {
+                parts.push(props.name);
+            }
+            if (props.city || props.locality) parts.push(props.city || props.locality);
+            if (props.state) parts.push(props.state);
+            if (props.postcode) parts.push(props.postcode);
+            return parts.join(', ');
         }
         
         function formatMainAddress(place) {
