@@ -1190,6 +1190,22 @@
             color: #fbbf24;
         }
         
+        .btn-small {
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: #9ca3af;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-small:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+        
         /* Confirm Dialog */
         .confirm-dialog {
             text-align: center;
@@ -1427,10 +1443,7 @@
                     <option value="Systems Building">Systems Building</option>
                     <option value="Education">Education</option>
                     <option value="Health">Health</option>
-                    <option value="Capacity & Leadership">Capacity & Leadership</option>
                     <option value="Direct Program Services">Direct Program Services</option>
-                    <option value="Capital">Capital</option>
-                    <option value="Growth Grant">Growth Grant</option>
                 </select>
             </div>
             <div class="toolbar-right">
@@ -1523,43 +1536,26 @@
                                 <option value="Systems Building">Systems Building</option>
                                 <option value="Education">Education</option>
                                 <option value="Health">Health</option>
-                                <option value="Capacity & Leadership">Capacity & Leadership</option>
                                 <option value="Direct Program Services">Direct Program Services</option>
-                                <option value="Capital">Capital</option>
-                                <option value="Growth Grant">Growth Grant</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Service Areas Type <span class="required">*</span></label>
+                            <label class="form-label">Service Coverage <span class="required">*</span></label>
                             <select class="form-select" id="orgServiceType" required>
-                                <option value="">Select type</option>
-                                <option value="City Wide">City Wide</option>
-                                <option value="State Wide">State Wide</option>
-                                <option value="Specific">Specific Areas</option>
-                                <option value="Evanston">Evanston</option>
-                                <option value="Evanston Mixed">Evanston Mixed</option>
-                                <option value="South West Sides">South West Sides</option>
+                                <option value="">Select coverage</option>
+                                <option value="City Wide">City Wide (All Chicago)</option>
+                                <option value="Specific">Specific Neighborhoods</option>
+                                <option value="South West Sides">South & West Sides</option>
+                                <option value="Evanston">Evanston Area</option>
+                                <option value="State Wide">State Wide (All Illinois)</option>
                             </select>
                         </div>
                     </div>
                     
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Latitude</label>
-                            <input type="number" step="any" class="form-input" id="orgLat" placeholder="41.8781">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Longitude</label>
-                            <input type="number" step="any" class="form-input" id="orgLng" placeholder="-87.6298">
-                        </div>
-                    </div>
-                    
-                    <div class="form-row single">
-                        <div class="form-group">
-                            <label class="form-label">Primary Neighborhood</label>
-                            <input type="text" class="form-input" id="orgPrimaryNeighborhood" placeholder="e.g., Chicago Lawn, bordering Englewood">
-                        </div>
-                    </div>
+                    <!-- Hidden lat/lng fields - auto-filled from address -->
+                    <input type="hidden" id="orgLat">
+                    <input type="hidden" id="orgLng">
+                    <input type="hidden" id="orgPrimaryNeighborhood">
                     
                     <div class="form-row single">
                         <div class="form-group">
@@ -1568,9 +1564,19 @@
                         </div>
                     </div>
                     
-                    <!-- Service Areas (shown when Specific is selected) -->
+                    <!-- Service Areas / Neighborhoods (shown when Specific is selected) -->
                     <div class="form-section" id="serviceAreasSection" style="display: none;">
-                        <div class="form-section-title">Service Areas</div>
+                        <div class="form-section-title">
+                            Select Neighborhoods
+                            <span style="font-size: 12px; color: #6b7280; font-weight: 400; margin-left: 8px;" id="selectedCount">(0 selected)</span>
+                        </div>
+                        <div style="margin-bottom: 12px;">
+                            <input type="text" class="form-input" id="neighborhoodSearch" placeholder="Search neighborhoods..." style="font-size: 13px;">
+                        </div>
+                        <div style="margin-bottom: 12px; display: flex; gap: 8px;">
+                            <button type="button" class="btn-small" onclick="selectAllNeighborhoods()">Select All</button>
+                            <button type="button" class="btn-small" onclick="clearAllNeighborhoods()">Clear All</button>
+                        </div>
                         <div class="service-areas-container" id="serviceAreasContainer">
                             <!-- Populated by JavaScript -->
                         </div>
@@ -2225,18 +2231,49 @@
             container.innerHTML = ALL_NEIGHBORHOODS.map(area => {
                 const displayName = area.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
                 return `
-                    <div class="service-area-checkbox">
-                        <input type="checkbox" id="area_${area}" value="${area}">
+                    <div class="service-area-checkbox" data-name="${displayName.toLowerCase()}">
+                        <input type="checkbox" id="area_${area}" value="${area}" onchange="updateSelectedCount()">
                         <label for="area_${area}">${displayName}</label>
                     </div>
                 `;
             }).join('');
+            
+            // Add search functionality
+            document.getElementById('neighborhoodSearch').addEventListener('input', function() {
+                const search = this.value.toLowerCase();
+                document.querySelectorAll('.service-area-checkbox').forEach(item => {
+                    const name = item.dataset.name;
+                    item.style.display = name.includes(search) ? 'flex' : 'none';
+                });
+            });
         }
         
         function toggleServiceAreas() {
             const serviceType = document.getElementById('orgServiceType').value;
             const section = document.getElementById('serviceAreasSection');
-            section.style.display = serviceType === 'Specific' ? 'block' : 'none';
+            // Show for Specific or South West Sides (to pick which specific neighborhoods)
+            section.style.display = (serviceType === 'Specific' || serviceType === 'South West Sides') ? 'block' : 'none';
+        }
+        
+        function updateSelectedCount() {
+            const count = document.querySelectorAll('#serviceAreasContainer input:checked').length;
+            document.getElementById('selectedCount').textContent = `(${count} selected)`;
+        }
+        
+        function selectAllNeighborhoods() {
+            document.querySelectorAll('#serviceAreasContainer .service-area-checkbox').forEach(item => {
+                if (item.style.display !== 'none') {
+                    item.querySelector('input').checked = true;
+                }
+            });
+            updateSelectedCount();
+        }
+        
+        function clearAllNeighborhoods() {
+            document.querySelectorAll('#serviceAreasContainer input').forEach(cb => {
+                cb.checked = false;
+            });
+            updateSelectedCount();
         }
         
         function addGrantField(data = {}) {
@@ -2347,7 +2384,9 @@
                 lng: parseFloat(document.getElementById('orgLng').value) || null,
                 service_areas: serviceAreas,
                 service_areas_type: serviceType,
-                primary_neighborhood: document.getElementById('orgPrimaryNeighborhood').value.trim() || null,
+                primary_neighborhood: serviceAreas.length > 0 
+                    ? serviceAreas.slice(0, 3).map(a => a.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())).join(', ')
+                    : null,
                 grants: grants,
                 location_note: document.getElementById('orgLocationNote').value.trim() || null
             };
