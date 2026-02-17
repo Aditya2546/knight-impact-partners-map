@@ -10,7 +10,36 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Knight Impact Partners Data -->
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Cloud Database Configuration -->
+    <script>
+        // ===========================================
+        // SUPABASE CONFIGURATION
+        // To enable cloud sync across all devices:
+        // 1. Go to https://supabase.com and create a free account
+        // 2. Create a new project
+        // 3. Go to Settings > API and copy your URL and anon key
+        // 4. Replace the values below
+        // ===========================================
+        const SUPABASE_URL = '';  // e.g., 'https://xxxxx.supabase.co'
+        const SUPABASE_ANON_KEY = '';  // Your anon/public key
+        
+        // Initialize Supabase client (if configured)
+        let supabase = null;
+        let cloudEnabled = false;
+        
+        if (SUPABASE_URL && SUPABASE_ANON_KEY) {
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            cloudEnabled = true;
+            console.log('Cloud sync enabled');
+        } else {
+            console.log('Cloud sync disabled - using local storage only');
+        }
+    </script>
+    
+    <!-- Knight Impact Partners Data (fallback) -->
     <script src="knight_data.js"></script>
     
     <!-- Chicago Neighborhood Data for service areas -->
@@ -1345,6 +1374,9 @@
                 <span class="logo-text">Knight Impact Partners</span>
             </div>
             <span class="header-title">Admin Dashboard</span>
+            <span id="cloudStatus" style="font-size: 12px; margin-left: 12px; padding: 4px 10px; background: rgba(255,255,255,0.05); border-radius: 12px;">
+                <span style="color: #9ca3af;">●</span> Local Only
+            </span>
         </div>
         <div class="header-right">
             <div class="history-actions">
@@ -1699,12 +1731,24 @@
             </div>
             <div class="modal-body">
                 <div class="publish-content">
+                    <div class="publish-info" style="background: rgba(251, 191, 36, 0.1); border-color: rgba(251, 191, 36, 0.3);">
+                        <strong style="color: #fbbf24;">Enable Cloud Sync for Instant Publishing</strong><br><br>
+                        To publish instantly without downloading files:<br>
+                        1. Go to <a href="https://supabase.com" target="_blank" style="color: #60a5fa;">supabase.com</a> and create a free account<br>
+                        2. Create a new project (free tier)<br>
+                        3. Go to SQL Editor and run:<br>
+                        <code style="display: block; background: #0d0d0d; padding: 8px; margin: 8px 0; border-radius: 4px; font-size: 11px;">
+CREATE TABLE organizations (id INT PRIMARY KEY, data JSONB, updated_at TIMESTAMP);
+                        </code>
+                        4. Go to Settings → API, copy your URL and anon key<br>
+                        5. Add them to dashboard.html and index.html<br><br>
+                        <strong>Manual deploy (current method):</strong>
+                    </div>
+                    
                     <div class="publish-info">
-                        <strong>How to deploy your changes:</strong><br><br>
                         1. Click "Download knight_data.js" below<br>
                         2. Replace the existing <code>knight_data.js</code> file in your project<br>
-                        3. Deploy your updated website<br><br>
-                        The map will automatically use the new data when visitors load the page.
+                        3. Deploy your updated website
                     </div>
                     
                     <div class="code-container">
@@ -1773,8 +1817,44 @@
                 .substring(0, 50);
         }
         
-        function loadData() {
-            // Try to load from localStorage first
+        async function loadData() {
+            // Try to load from cloud first if enabled
+            if (cloudEnabled) {
+                try {
+                    const cloudData = await loadFromCloud();
+                    if (cloudData && cloudData.length > 0) {
+                        state.organizations = cloudData;
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudData));
+                        console.log('Loaded from cloud:', cloudData.length, 'organizations');
+                        updateCloudStatus('connected');
+                    } else {
+                        // Cloud is empty, load from local file and push to cloud
+                        loadFromSource();
+                        await saveToCloud(state.organizations);
+                    }
+                } catch (e) {
+                    console.error('Cloud load failed, using local:', e);
+                    updateCloudStatus('error');
+                    loadFromLocalStorage();
+                }
+            } else {
+                loadFromLocalStorage();
+            }
+            
+            // Load history from localStorage (always local)
+            const storedHistory = localStorage.getItem(HISTORY_KEY);
+            if (storedHistory) {
+                try {
+                    state.history = JSON.parse(storedHistory);
+                } catch (e) {
+                    console.error('Error parsing history:', e);
+                }
+            }
+            
+            updateUI();
+        }
+        
+        function loadFromLocalStorage() {
             const stored = localStorage.getItem(STORAGE_KEY);
             if (stored) {
                 try {
@@ -1786,18 +1866,60 @@
             } else {
                 loadFromSource();
             }
+        }
+        
+        async function loadFromCloud() {
+            if (!supabase) return null;
             
-            // Load history
-            const storedHistory = localStorage.getItem(HISTORY_KEY);
-            if (storedHistory) {
-                try {
-                    state.history = JSON.parse(storedHistory);
-                } catch (e) {
-                    console.error('Error parsing history:', e);
-                }
+            const { data, error } = await supabase
+                .from('organizations')
+                .select('data')
+                .eq('id', 1)
+                .single();
+            
+            if (error) {
+                console.error('Cloud load error:', error);
+                return null;
             }
             
-            updateUI();
+            return data?.data || null;
+        }
+        
+        async function saveToCloud(organizations) {
+            if (!supabase) return false;
+            
+            const { error } = await supabase
+                .from('organizations')
+                .upsert({ 
+                    id: 1, 
+                    data: organizations,
+                    updated_at: new Date().toISOString()
+                });
+            
+            if (error) {
+                console.error('Cloud save error:', error);
+                updateCloudStatus('error');
+                return false;
+            }
+            
+            updateCloudStatus('synced');
+            return true;
+        }
+        
+        function updateCloudStatus(status) {
+            const indicator = document.getElementById('cloudStatus');
+            if (!indicator) return;
+            
+            const statuses = {
+                'connected': { text: 'Cloud Connected', color: '#4ade80' },
+                'synced': { text: 'Synced to Cloud', color: '#4ade80' },
+                'syncing': { text: 'Syncing...', color: '#fbbf24' },
+                'error': { text: 'Cloud Error', color: '#f87171' },
+                'offline': { text: 'Local Only', color: '#9ca3af' }
+            };
+            
+            const s = statuses[status] || statuses['offline'];
+            indicator.innerHTML = `<span style="color: ${s.color};">●</span> ${s.text}`;
         }
         
         function loadFromSource() {
@@ -2623,10 +2745,34 @@ const KNIGHT_ORGANIZATIONS_DATA = `;
             return header + jsonData + ';\n';
         }
         
-        function openPublishModal() {
-            const code = generateKnightDataJS();
-            document.getElementById('publishCode').textContent = code;
-            document.getElementById('publishModal').classList.add('show');
+        async function openPublishModal() {
+            if (cloudEnabled) {
+                // Cloud is enabled - publish directly
+                await publishToCloud();
+            } else {
+                // No cloud - show manual publish modal
+                const code = generateKnightDataJS();
+                document.getElementById('publishCode').textContent = code;
+                document.getElementById('publishModal').classList.add('show');
+            }
+        }
+        
+        async function publishToCloud() {
+            updateCloudStatus('syncing');
+            showToast('Publishing to cloud...', 'info');
+            
+            const success = await saveToCloud(state.organizations);
+            
+            if (success) {
+                showToast('Published! Changes are now live on the map.', 'success');
+                updateCloudStatus('synced');
+            } else {
+                showToast('Publish failed. Check cloud configuration.', 'error');
+                // Fall back to manual modal
+                const code = generateKnightDataJS();
+                document.getElementById('publishCode').textContent = code;
+                document.getElementById('publishModal').classList.add('show');
+            }
         }
         
         function closePublishModal() {
