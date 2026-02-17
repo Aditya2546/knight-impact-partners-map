@@ -1440,10 +1440,9 @@
                     <option value="">All Categories</option>
                     <option value="Human Services">Human Services</option>
                     <option value="Community Building">Community Building</option>
-                    <option value="Systems Building">Systems Building</option>
                     <option value="Education">Education</option>
                     <option value="Health">Health</option>
-                    <option value="Direct Program Services">Direct Program Services</option>
+                    <option value="Systems Building">Systems Building</option>
                 </select>
             </div>
             <div class="toolbar-right">
@@ -1533,21 +1532,23 @@
                                 <option value="">Select category</option>
                                 <option value="Human Services">Human Services</option>
                                 <option value="Community Building">Community Building</option>
-                                <option value="Systems Building">Systems Building</option>
                                 <option value="Education">Education</option>
                                 <option value="Health">Health</option>
-                                <option value="Direct Program Services">Direct Program Services</option>
+                                <option value="Systems Building">Systems Building</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Service Coverage <span class="required">*</span></label>
+                            <label class="form-label">Service Region <span class="required">*</span></label>
                             <select class="form-select" id="orgServiceType" required>
-                                <option value="">Select coverage</option>
-                                <option value="City Wide">City Wide (All Chicago)</option>
+                                <option value="">Select region</option>
+                                <option value="City Wide">City Wide</option>
                                 <option value="Specific">Specific Neighborhoods</option>
-                                <option value="South West Sides">South & West Sides</option>
-                                <option value="Evanston">Evanston Area</option>
-                                <option value="State Wide">State Wide (All Illinois)</option>
+                                <option value="South Side">South Side</option>
+                                <option value="West Side">West Side</option>
+                                <option value="Suburban Cook">Suburban Cook</option>
+                                <option value="Lake County">Lake County</option>
+                                <option value="Evanston">Evanston</option>
+                                <option value="State Wide">State Wide</option>
                             </select>
                         </div>
                     </div>
@@ -2251,8 +2252,8 @@
         function toggleServiceAreas() {
             const serviceType = document.getElementById('orgServiceType').value;
             const section = document.getElementById('serviceAreasSection');
-            // Show for Specific or South West Sides (to pick which specific neighborhoods)
-            section.style.display = (serviceType === 'Specific' || serviceType === 'South West Sides') ? 'block' : 'none';
+            // Only show neighborhoods selection for "Specific Neighborhoods"
+            section.style.display = serviceType === 'Specific' ? 'block' : 'none';
         }
         
         function updateSelectedCount() {
