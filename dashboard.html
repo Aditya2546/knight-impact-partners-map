@@ -2693,7 +2693,18 @@ const KNIGHT_ORGANIZATIONS_DATA = `;
                     return;
                 }
                 
-                suggestionsContainer.innerHTML = data.map(place => {
+                // Deduplicate results based on formatted address
+                const seen = new Set();
+                const uniqueData = data.filter(place => {
+                    const mainText = formatMainAddress(place);
+                    const secondaryText = formatSecondaryAddress(place);
+                    const key = `${mainText}|${secondaryText}`.toLowerCase();
+                    if (seen.has(key)) return false;
+                    seen.add(key);
+                    return true;
+                });
+                
+                suggestionsContainer.innerHTML = uniqueData.map(place => {
                     const mainText = formatMainAddress(place);
                     const secondaryText = formatSecondaryAddress(place);
                     
